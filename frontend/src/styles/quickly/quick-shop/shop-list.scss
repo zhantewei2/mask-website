@@ -1,0 +1,85 @@
+.shop-card {
+
+  box-sizing: border-box;
+  @include Radius();
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.shop-list-card {
+  background: $--color-light-bg;
+  @extend .shop-card;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 400px;
+}
+
+%shop-item-card {
+  display: inline-flex;
+  align-items: center;
+  flex-flow: column;
+
+  .shop-item-image {
+    @include Radius();
+
+    .img {
+      @include Radius();
+      transition: all .3s;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale3d(1.2, 1.2, 1.2);
+      }
+    }
+  }
+
+  header {
+    cursor: pointer;
+  }
+
+}
+
+.shop-item-card-primary {
+  @extend %shop-item-card;
+  @include Radius();
+  @include AutoFill($shop-item-card-primary);
+
+  .shop-item-image {
+    @include AutoFill($shop-item-card-primary-img);
+  }
+
+  header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: lucency_text($--color-main);
+    margin-top: 1rem;
+
+    &:hover {
+      color: $--color-main;
+    }
+  }
+}
+
+.shop-item-card-secondary {
+  @extend %shop-item-card;
+  @include Radius();
+  @include AutoFill($shop-item-card-secondary);
+
+  .shop-item-image {
+    @include AutoFill($shop-item-card-secondary-img);
+  }
+
+  header {
+    @include text_color(title);
+    @include AutoFill($shop-item-card-secondary-header);
+
+    &:hover {
+      color: $--color-main;
+    }
+  }
+
+  footer {
+  }
+}

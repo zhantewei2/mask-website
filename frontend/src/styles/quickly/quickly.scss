@@ -1,0 +1,83 @@
+@keyframes ImageBgEntry {
+  from {
+    opacity: 0
+  }
+  to {
+  }
+}
+
+.show-image-transition {
+  transition: all .3s ease-out;
+}
+
+.show-image-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(black, .4);
+  $close-len: 50px;
+  z-index: 1000;
+  @include use-animation(ImageBgEntry);
+  overflow: auto;
+
+  .container {
+    position: absolute;
+    @include Shadow("modal");
+    @include Radius();
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    background: $--yiq-light;
+    margin-top: $close-len/2;
+
+    .close {
+      position: absolute;
+      top: 0 - $close-len/2;
+      right: 0 - $close-len/2;
+      height: $close-len;
+      width: $close-len;
+      background: $--color-light-bg;
+      border-radius: 50%;
+      @include center();
+      cursor: pointer;
+
+      &:hover {
+        background: $--color-light-border;
+      }
+    }
+
+    img {
+      @include Radius();
+      max-width: 90vw;
+    }
+  }
+}
+
+.image-bg-leave {
+  opacity: 0;
+}
+
+.show-image-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  @include Radius();
+
+  img {
+    @include Radius();
+  }
+}
+
+.show-image-cover {
+  @include Radius();
+  @include Abs-full();
+  background: rgba(black, .4);
+  @include center();
+
+  i {
+    font-size: 3.5em;
+    color: rgba(white, .8)
+  }
+}

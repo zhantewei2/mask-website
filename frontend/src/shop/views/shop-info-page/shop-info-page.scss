@@ -1,0 +1,33 @@
+.img-main {
+  width: 450px;
+  height: 450px;
+  border-radius: 15px;
+  cursor: pointer;
+
+}
+
+.exhibition-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+
+  & > * {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+  }
+
+  article {
+    min-width: 300px;
+    margin-left: 2rem;
+    padding: 1rem;
+
+    > * {
+      width: 100%;
+
+    }
+
+  }
+}

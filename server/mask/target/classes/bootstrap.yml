@@ -1,0 +1,46 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: service-mask-main
+  jackson:
+    #去除json null字段
+    default-property-inclusion: non_null
+    time-zone: GMT+8
+    date-format: yyyy/MM/dd HH:mm:ss
+
+  datasource:
+    url: jdbc:mysql://180.76.248.31:3307/mask?serverTimezone=Asia/Shanghai
+    username: ztwx
+    password: jianqiangmysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialization-mode: always
+
+  mail:
+    host: smtp.163.com
+    username: iowa_email_01@163.com
+    password: woaiwo123
+    properties:
+      mail:
+        smtp:
+          port: 25
+          auth: true
+          starttls:
+            enable: true
+
+#  redis:
+#    host: @redis.host@
+#    port: @redis.port@
+#    database: @redis.database@
+#    password: @redis.password@
+
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: @nacos.hostname@:@nacos.port@
+#        #        ip: 192.168.0.101
+#        namespace: @nacos.general.namespace@
+#nacos:
+#  config:
+#    server-addr: @nacos.hostname@:@nacos.port@
+#    group: market-dev

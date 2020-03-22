@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ztwx.mask.dao.ShopDao" >
+    <resultMap id="shopResultMapSimple" type="com.ztwx.mask.entity.ShopSimple">
+        <id property="id" column="id" />
+        <association property="vestRef" column="{id=vestIn}" select="findOneShopClassById" />
+    </resultMap>
+
+    <resultMap id="shopResultMap" type="com.ztwx.mask.entity.Shop">
+        <id property="id" column="id" />
+        <association property="vestRef" column="{id=vestIn}" select="findOneShopClassById" />
+    </resultMap>
+
+    <select id="infoShop" resultMap="shopResultMap">
+        select s.*,i.* from shop as s
+        left join shopInfo as i on s.id=i.id
+        where s.id=#{id}
+    </select>
+
+
+    <select id="listShop" resultMap="shopResultMapSimple" parameterType="java.util.Map">
+        select * from shop
+        <where>
+            <if test="vestIns!=null">
+            vestIn in
+            <foreach item="item" index="index" collection="vestIns"
+            open="(" separator="," close=")"
+            >
+                #{item}
+            </foreach>
+            </if>
+        </where>
+        limit #{skip},#{limit};
+    </select>
+    <select id="totalShop" parameterType="java.util.Map" resultType="java.util.Map">
+        select count(id) as total from shop
+        <where>
+            <if test="vestIn!=null">
+                vestIn=#{vestIn}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertShop" parameterType="com.ztwx.mask.entity.Shop">
+        insert into shop
+            <set>
+                id=#{id},
+                name=#{name},
+                price=#{price},
+                img=#{img},
+                vestIn=#{vestIn}
+            </set>;
+
+    </insert>
+    <insert id="insertShopInfo" parameterType="com.ztwx.mask.entity.Shop">
+        insert into shopInfo
+        <set>
+            id=#{id},
+            <if test="type!=null">
+                type=#{type},
+            </if>
+            imgs=#{imgs},
+            box=#{box},
+            ctn=#{ctn},
+            dimension=#{dimension},
+            GW=#{GW},
+            NW=#{NW}
+        </set>
+    </insert>
+    <delete id="deleteShop" >
+        delete from shop where id=#{id};
+        delete from shopInfo where id=#{id};
+    </delete>
+    <update id="updateShop" parameterType="Shop">
+
+            update shop
+            <set>
+                <if test="name!=null">name=#{name},</if>
+                <if test="price!=null">price=#{price},</if>
+                <if test="img!=null">img=#{img},</if>
+                <if test="vestIn!=null">vestIn=#{vestIn}</if>
+            </set>
+            where id=#{id};
+
+    </update>
+    <update id="updateShopInfo" parameterType="Shop">
+        update shopInfo
+        <set>
+            <if test="type!=null">type=#{type},</if>
+            <if test="imgs!=null">imgs=#{imgs},</if>
+            <if test="box!=null">box=#{box},</if>
+            <if test="ctn!=null">ctn=#{ctn},</if>
+            <if test="dimension!=null">dimension=#{dimension},</if>
+            <if test="GW!=null">GW=#{GW},</if>
+            <if test="NW!=null">NW=#{NW}</if>
+        </set>
+        where id=#{id}
+
+    </update>
+
+
+<!--    商品类型管理-->
+    <insert id="insertShopClass">
+        insert into classify(name) values(#{name});
+    </insert>
+    <update id="updateShopClass" parameterType="ShopClass">
+        update classify
+            <set>
+                <if test="name!=null">name=#{name},</if>
+                <if test="enabled!=null">enabled=#{enabled}</if>
+            </set> where id=#{id}
+    </update>
+
+    <select id="queryShopClass" resultType="ShopClass">
+        select * from classify where enabled!=0;
+    </select>
+
+    <select id="findOneShopClassById" resultType="ShopClass">
+        select * from classify where id=#{id}
+    </select>
+</mapper>

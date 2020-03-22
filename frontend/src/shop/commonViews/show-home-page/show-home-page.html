@@ -1,0 +1,34 @@
+<div>
+    <div class="shop-home-header"></div>
+    <article class="shop-article">
+        <nav class="shop-home-nav-wrapper">
+            <div class="shop-home-header2 between">
+                <img src="image/shop-logo.png"/>
+                <div class="nav-menu" v-cm-ripple>
+                    <i class="fa fa-menu"></i>
+                </div>
+            </div>
+            <div class="shop-home-nav">
+                <div class="item-wrapper" v-for="(i,index) in navData" :key="index">
+                    <el-dropdown v-if="i.children">
+                        <div class="shop-home-nav-item">
+                            {{i.name}}
+                            <i class="el-icon-arrow-down el-icon--right"></i>
+                        </div>
+                        <el-dropdown-menu v-if="i.children" slot="dropdown">
+                            <div class="ice-line" v-cm-ripple v-for="j in i.children" :key="j.id">{{j.name}}</div>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                    <div @click="navHref(i)" v-else class="el-dropdown shop-home-nav-item-link">
+                        {{i.name}}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </article>
+    <div class="shop-home-content">
+        <slot></slot>
+    </div>
+    <footer class="shop-home-footer"></footer>
+
+</div>

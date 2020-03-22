@@ -1,0 +1,28 @@
+<div>
+    <div>
+        <el-carousel v-if="!isMobile" height="470px" indicator-position="outside">
+            <el-carousel-item v-for="(i,index) in carouselData" :key="index">
+                <div @click="navList(i)" class="shop-carousel-div" :style="{
+                    backgroundImage:'url('+i.src+')'
+                }">
+                </div>
+            </el-carousel-item>
+        </el-carousel>
+    </div>
+    <article class="shop-article">
+        <shop-itd>
+            <div slot="name" class="shop-itd-title">{{itdName}}</div>
+            <div slot="content">{{itdContent}}</div>
+        </shop-itd>
+    </article>
+    <main class="shop-list-card shop-article">
+        <shop-item
+                primary="true"
+                :itemRef="i" v-for="(i,index) in mainList" :key="index"
+                @navClick="clickMainItem(i)"
+        >
+
+        </shop-item>
+
+    </main>
+</div>

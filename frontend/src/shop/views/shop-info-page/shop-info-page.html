@@ -1,0 +1,44 @@
+<div class="shop-article">
+
+    <div class="shop-card" style="min-height: 300px">
+
+        <div class="itd-title" v-if="shop.name">
+            <span>{{shopName}} Mask</span>
+        </div>
+
+        <svg-loader :show="loading" top="80px"/>
+        <div class="exhibition-container" v-if="shop.name">
+            <main>
+                <lazy-image
+                        v-show-image
+                        @click="showImage(shop.img)" class="img-main" :src="shop.img">
+                </lazy-image>
+
+            </main>
+            <article>
+                <div>
+                    article
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <div class="shop-card" v-if="shop.name">
+        <div class="itd-title">
+            <span>Packaging</span>
+        </div>
+        <div>
+            <el-table
+                    :data="tableData"
+                    border
+            >
+                <el-table-column prop="name" label="Cone Mask"/>
+                <el-table-column prop="vestName" label="type"/>
+                <el-table-column prop="box" label="box"/>
+                <el-table-column prop="ctn" label="ctn"/>
+                <el-table-column prop="dimension" label="dimension"/>
+                <el-table-column prop="GWNW" label="GW/NW"/>
+            </el-table>
+        </div>
+    </div>
+</div>

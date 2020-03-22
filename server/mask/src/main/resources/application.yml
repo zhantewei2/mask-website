@@ -1,0 +1,14 @@
+server:
+  port: @service.fiction.port@
+  tomcat:
+    max-threads: @service.fiction.threads@
+
+
+logging:
+  config: @log.config@
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.ztwx.mask.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

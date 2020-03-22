@@ -1,0 +1,44 @@
+$shop-home-header: (
+        h:80px
+);
+$shop-home-nav-bg: $--color-bg;
+$shop-home-nav-hover: $--color-light-main-bg;
+
+$shop-nav-item: (
+        h:60px,
+        w:120px,
+        display:inline-block,
+        bold:true,
+);
+$shop-nav-item-thumb: (
+        h:5px,
+        bg:$--color-main
+);
+
+
+$shop-item-card-primary: (
+        h:20rem,
+        m:1rem,
+        mb:2rem,
+        px:4rem
+);
+$shop-item-card-primary-img: (
+        h: 200px,
+        w:250px
+);
+
+$shop-item-card-secondary: (
+        m:1rem,
+        mb:2rem,
+        px:4rem
+);
+$shop-item-card-secondary-img: (
+        h:351px,
+        w:351px
+);
+$shop-item-card-secondary-header: (
+        font:1.4rem,
+        m:1rem 0,
+        mb:2rem,
+        color: lucency_text($--color-main)
+);

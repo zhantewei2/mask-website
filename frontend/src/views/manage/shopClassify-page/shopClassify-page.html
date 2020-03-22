@@ -1,0 +1,58 @@
+<div>
+
+    <div class="cm-search-card">
+        <Form :form="form">
+            <Row>
+                <Cell>
+                    <Label> 名称</Label>
+                    <Value v-form-controller="'name'">
+                        <el-input v-model="form.value.name"/>
+                    </Value>
+                </Cell>
+            </Row>
+        </Form>
+        <Aside class="text-center">
+            <el-button @click="add">新增</el-button>
+        </Aside>
+    </div>
+
+    <div class="cm-content-card">
+
+
+        <Table
+                :loading="tableLoading"
+                :data="lists"
+        >
+            <el-table-column prop="id" label="id"/>
+
+            <el-table-column prop="name" label="name"/>
+
+            <el-table-column prop="handle" label="handle">
+                <template slot-scope="scope">
+                    <el-button @click="toUpdate(scope.row)" size="mini" type="text">更改</el-button>
+                    <el-popconfirm
+                            @onConfirm="toDelete(scope.row)"
+                            title="确认删除"
+                    >
+                        <el-button style="margin-left:10px;" slot="reference" size="mini" type="text">删除</el-button>
+                    </el-popconfirm>
+                </template>
+            </el-table-column>
+        </Table>
+    </div>
+
+    <el-dialog :visible.sync="showUpdate">
+        <Row>
+            <Cell>
+                <Label>名称</Label>
+                <Value>
+                    <el-input v-model="updateObj.name"/>
+                </Value>
+            </Cell>
+        </Row>
+        <div slot="footer">
+            <el-button @click="closeUpdate">取消</el-button>
+            <el-button @click="confirmUpdate">确定</el-button>
+        </div>
+    </el-dialog>
+</div>

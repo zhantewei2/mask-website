@@ -1,0 +1,63 @@
+.yo-baidu-uploader {
+  height: $--yo-upload-l;
+  width: $--yo-upload-l;
+  position: relative;
+  @include Radius();
+  overflow: hidden;
+  @include Iflex-center();
+  @include LucencyBG($--yo-upload-color);
+
+  .icon-upload {
+    font-size: $--yo-upload-icon-size;
+  }
+
+  .close-upload {
+    position: absolute;
+    top: .4rem;
+    right: .4rem;
+    height: 2rem;
+    width: 2rem;
+    @include center();
+    border-radius: 50%;
+    background: rgba($--color-bg, .8);
+    z-index: 10;
+    cursor: pointer;
+  }
+
+  .input-upload {
+    @include Abs-full();
+    z-index: 2;
+    opacity: 0;
+  }
+
+  .img-exhibition {
+    @include Abs-full();
+    z-index: 1;
+    @include Radius();
+  }
+
+  .cover {
+    display: none !important;
+    z-index: 3;
+    @include Abs-full();
+    background: rgba($--yiq-dark, 0.1);
+
+    i {
+      font-size: $--yo-upload-icon-size;
+    }
+  }
+
+  &.cover:hover {
+    cursor: pointer;
+
+    .cover {
+      @include center();
+      display: flex !important;
+      color: $--yiq-light;
+
+      i {
+        color: rgba($--yiq-light, .6);
+      }
+    }
+  }
+}

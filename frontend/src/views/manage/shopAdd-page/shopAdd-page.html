@@ -1,0 +1,95 @@
+<div class="cm-search-card">
+    <Form :form="form">
+        <Row>
+            <Cell>
+                <Label>商品名</Label>
+                <Value v-form-controller="'name'">
+                    <el-input v-model="form.value.name"/>
+                </Value>
+            </Cell>
+        </Row>
+        <Row>
+            <Cell>
+                <Label>价格</Label>
+                <Value v-form-controller="'price'">
+                    <el-input type="number" v-model="form.value.price"/>
+                </Value>
+            </Cell>
+        </Row>
+        <Row>
+            <Cell>
+                <Label>商品图片</Label>
+                <Value v-form-controller="'img'">
+                    <baidu-upload v-model="form.value.img"></baidu-upload>
+                </Value>
+            </Cell>
+        </Row>
+        <Row>
+            <Cell>
+                <Label>类型</Label>
+                <Value v-form-controller="'vestIn'">
+                    <el-select v-model="form.value.vestIn" placeholder="类型" clearable>
+                        <el-option
+                                v-for="item in vestInList"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </Value>
+            </Cell>
+        </Row>
+        <Row>
+            <Cell>
+                <Label>type</Label>
+                <Value>
+                    <el-input v-model="form.value.type"/>
+                </Value>
+            </Cell>
+        </Row>
+        <Row>
+            <Cell>
+                <Label>box</Label>
+                <Value>
+                    <el-input v-model="form.value.box"/>
+                </Value>
+            </Cell>
+        </Row>
+        <Row>
+            <Cell>
+                <Label>ctn</Label>
+                <Value>
+                    <el-input v-model="form.value.ctn"/>
+                </Value>
+            </Cell>
+        </Row>
+        <Row>
+            <Cell>
+                <Label>dimension</Label>
+                <Value>
+                    <el-input v-model="form.value.dimension"/>
+                </Value>
+            </Cell>
+        </Row>
+        <Row>
+            <Cell>
+                <Label>GW</Label>
+                <Value>
+                    <el-input v-model="form.value.GW"/>
+                </Value>
+            </Cell>
+        </Row>
+        <Row>
+            <Cell>
+                <Label>NW</Label>
+                <Value>
+                    <el-input v-model="form.value.NW"/>
+                </Value>
+            </Cell>
+        </Row>
+    </Form>
+    <Aside class="text-center">
+        <el-button type="primary" :disabled="!form.isPass" @click="submit">提交</el-button>
+        <el-button @click="reset">重置</el-button>
+    </Aside>
+</div>

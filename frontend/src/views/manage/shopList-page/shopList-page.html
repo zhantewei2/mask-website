@@ -1,0 +1,31 @@
+<div>
+    <article class="cm-search-card">
+
+    </article>
+    <article class="cm-content-card">
+        <Table
+                :total="total"
+                :data="data"
+                :loading="tableLoading"
+                :pageChange="pageChange"
+        >
+            <el-table-column prop="name" label="商品"/>
+            <el-table-column label="图片" width="150">
+                <template slot-scope="scope">
+                    <div v-show-image class="shop-img">
+                        <img :src="scope.row.img"/>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="price" label="价格"/>
+            <el-table-column prop="vestIn" label="类别"/>
+            <el-table-column prop="type" label="type"/>
+            <el-table-column prop="box" label="box"/>
+            <el-table-column prop="ctn" label="ctn"/>
+            <el-table-column prop="dimension" label="dimension"/>
+            <el-table-column prop="GW" label="GW"/>
+            <el-table-column prop="NW" label="NW"/>
+
+        </Table>
+    </article>
+</div>

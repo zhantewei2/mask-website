@@ -1,0 +1,46 @@
+<div class="login-page-wrapper">
+<!--    <vue-canvas-nest :config="nestConfig" :el="'#nestArea'"></vue-canvas-nest>-->
+
+    <div class="login-page">
+        <el-card class="login-page-card rel">
+            <header slot="header">
+                {{projectName}}
+            </header>
+            <main class="login-page-main">
+                <!-- account -->
+                <el-input
+                    clearable
+                    v-model="account"
+                    placeholder="账号"
+                >
+<!--                    <i slot="prepend" class="fa fa-account"></i>-->
+                </el-input>
+                <!-- password -->
+                <el-input
+                    clearable
+                    v-model="password"
+                    placeholder="密码"
+                    type="password"
+                    ref="pass"
+                >
+                </el-input>
+                <div>
+                  <el-checkbox v-model="saveAccount" >记住账号</el-checkbox>
+                </div>
+                <div>
+                    <el-button
+                        type="primary"
+                        class="login-btn"
+                        @click="pageLogin"
+                    >
+                        登陆
+                    </el-button>
+                    <yo-mini-loader :show="loading"></yo-mini-loader>
+                </div>
+            </main>
+        </el-card>
+        <footer>
+<!--          <div class="brand-show">{{providerName}}</div>-->
+        </footer>
+    </div>
+</div>

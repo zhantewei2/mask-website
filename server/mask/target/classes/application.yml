@@ -1,0 +1,14 @@
+server:
+  port: 8806
+  tomcat:
+    max-threads: 20
+
+
+logging:
+  config: classpath:logback/logback-spring.dev.xml
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.ztwx.mask.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

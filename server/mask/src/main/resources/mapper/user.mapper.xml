@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ztwx.mask.dao.UserDao" >
+    <select id="userLogin" resultType="UserEntity" parameterType="com.ztwx.mask.controller.params.UserLoginParams">
+        select * from User where name=#{username} and password=#{password}
+    </select>
+
+    <insert id="userRegister" parameterType="UserEntity">
+        insert into User (id,account,name,password)
+        values(
+               #{id},#{account},#{name},#{password}
+        )
+    </insert>
+
+    <update id="writeLoginDate" >
+        update User set lastLogin = current_timestamp()
+        where id=#{id}
+    </update>
+</mapper>

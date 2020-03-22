@@ -1,0 +1,42 @@
+.shop-itd {
+  @include Radius();
+  background: $--color-light-bg;
+  margin-bottom: 1.5rem;
+  padding: 1rem 2rem;
+
+
+  .name {
+    @include text_color(title);
+    font-weight: bold;
+    font-size: 1.4rem;
+    padding: 1rem 0;
+
+    > div {
+      display: inline-block;
+      padding: .5rem .8rem;
+      position: relative;
+      @include Radius();
+      @include LucencyBG($--color-main);
+    }
+  }
+
+  .content {
+    @include text_color(des);
+  }
+}
+
+.itd-title {
+  padding: 1.2rem .5rem 1rem .5rem;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: $--color-main;
+  text-align: center;
+
+  & > span {
+    display: inline-block;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid $--color-light-border;
+  }
+
+}
