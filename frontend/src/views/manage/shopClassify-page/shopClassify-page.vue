@@ -31,8 +31,8 @@
          */
         add() {
             const isPass: boolean = this.form.checkValidators();
-            const btnLoad = this.$iceBtnLoad();
             if (isPass) {
+                const btnLoad = this.$iceBtnLoad();
                 const value: any = this.form.value;
                 insertShopClass(value)
                     .subscribe(res => {

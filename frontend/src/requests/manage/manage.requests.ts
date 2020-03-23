@@ -33,13 +33,11 @@ export const reqInsertShop = (p: any) => {
 export interface QueryShopParams {
     currentPage: number;
     pageSize: number;
-    query?: { vestIns: number[] };
+    query?: any;
 }
 
 export const reqQueryShop = (p: QueryShopParams) => {
-    return http.xhr("post", "shop/queryShop", p, {
-        expires: 60 * 5
-    });
+    return http.xhr("post", "shop/queryShop", p);
 };
 
 export const reqShopInfo = (id: string) => {

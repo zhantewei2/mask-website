@@ -17,7 +17,9 @@
     @Component({})
     export default class extends Vue {
         navData: any = navData;
-
+        navList(j:any){
+            this.$store.dispatch("navList",j.id);
+        }
         navHref(i: any) {
             if (i.href) this.$router.push(i.href);
         }

@@ -16,7 +16,7 @@
                             <i class="el-icon-arrow-down el-icon--right"></i>
                         </div>
                         <el-dropdown-menu v-if="i.children" slot="dropdown">
-                            <div class="ice-line" v-cm-ripple v-for="j in i.children" :key="j.id">{{j.name}}</div>
+                            <div @click="navList(j)" class="ice-line" v-cm-ripple v-for="j in i.children" :key="j.id">{{j.name}}</div>
                         </el-dropdown-menu>
                     </el-dropdown>
                     <div @click="navHref(i)" v-else class="el-dropdown shop-home-nav-item-link">
