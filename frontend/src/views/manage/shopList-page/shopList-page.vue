@@ -13,9 +13,14 @@
     import Vue from "vue";
     import {Component} from "vue-property-decorator";
     import {PaginationParams} from "@types";
-    import {reqQueryShop} from "@/requests/manage/manage.requests";
+    import {reqQueryShop, reqRemoveShop} from "@/requests/manage/manage.requests";
+    import ShopAddPage from "../shopAdd-page/shopAdd-page.vue";
 
-    @Component({})
+    @Component({
+        components: {
+            "shop-add": ShopAddPage
+        }
+    })
     export default class extends Vue {
         data: any = [];
         tableLoading: boolean = false;
@@ -23,6 +28,8 @@
         currentPage: number = 1;
         pageSize: number = 10;
         total: number = 0;
+        updateItem: any = null;
+        visibleUpdate: boolean = false;
 
         mounted() {
             this.pageChange({currentPage: this.currentPage, pageSize: this.pageSize});
@@ -39,11 +46,44 @@
                 } : undefined
             }).subscribe((result: any) => {
                 this.tableLoading = false;
-                this.data = result.list;
                 this.total = result.total;
                 this.currentPage = result.currentPage;
+                this.handleList(result.list);
+                this.data = result.list;
             }, () => {
                 this.tableLoading = false;
+            })
+        }
+
+        handleList(list: any[]) {
+            list && list.length && list.forEach(i => {
+                i.className = (i.vestRef || {}).name;
+            })
+        }
+
+        updateShop(i: any) {
+
+            this.updateItem = i;
+            this.visibleUpdate = true;
+        }
+
+        shopUpdated(newValue: any) {
+            this.visibleUpdate = false;
+            Object.assign(this.updateItem, newValue);
+            this.handleList([this.updateItem]);
+        }
+
+        deleteShop(i: any) {
+            this.tableLoading = true;
+            reqRemoveShop(i.id).subscribe(() => {
+                this.tableLoading = false;
+                this.$store.dispatch("success", "remove successful");
+                const index = this.data.findIndex((item: any) => item == i);
+                this.data.splice(index, 1);
+
+            }, () => {
+                this.tableLoading = false;
+                this.$store.dispatch("err", "remove error");
             })
         }
 

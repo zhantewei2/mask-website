@@ -12,4 +12,7 @@ public class ShopClass {
     private int id;
     private String name;
     private Integer enabled;
+    private Integer main;
+    private Integer parentClass;
+    private ShopClass parentClassRef;
 }

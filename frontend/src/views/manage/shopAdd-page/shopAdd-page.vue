@@ -11,12 +11,14 @@
 
 <script lang="ts">
     import Vue from "vue";
-    import {Component} from "vue-property-decorator";
+    import {Component, Prop} from "vue-property-decorator";
     import {Form, requiredValidator, minValidator} from "ztwx-fire-ui/form";
-    import {findClassList, reqInsertShop} from "@/requests/manage/manage.requests";
+    import {findClassList, reqInsertShop, reqUpdateShop} from "@/requests/manage/manage.requests";
 
     @Component({})
     export default class extends Vue {
+        @Prop({}) formValue: any;
+        updateId: string = "";
         form: Form = new Form([
             {id: "name", validator: [new requiredValidator("必须填写商品名")]},
             {id: "price", validator: [new minValidator("必须大于0", 1)]},
@@ -37,15 +39,44 @@
             const value: any = this.form.value;
             this.form.value.imgs = this.form.value.img;
             if (value.price) value.price = Number(value.price);
-            reqInsertShop(value)
-                .subscribe(() => {
+
+            if (!this.updateId) {
+
+
+                reqInsertShop(value)
+                    .subscribe(() => {
+                        btnLoad.cancel();
+                        this.form.reset();
+                        this.$store.dispatch("success", "新增商品成功");
+                    }, (e) => {
+                        btnLoad.cancel();
+                        this.$store.dispatch("err", e);
+                    })
+            } else {
+                reqUpdateShop({
+                    id: this.updateId,
+                    body: value
+                }).subscribe(() => {
                     btnLoad.cancel();
+                    /**
+                     * handle vestIn
+                     */
+
+                    if (this.formValue.vestRef && (this.formValue.vestIn != value.vestIn)) {
+                        value.vestRef = this.vestInList.find(i => i.id == value.vestIn);
+                    }
+                    this.$emit("shopUpdated", value);
+                    this.$store.dispatch("success", "修改成功");
                     this.form.reset();
-                    this.$store.dispatch("success", "新增商品成功");
-                }, (e) => {
+                }, e => {
                     btnLoad.cancel();
                     this.$store.dispatch("err", e);
                 })
+            }
+        }
+
+        handleVestIn() {
+
         }
 
         reset() {
@@ -54,12 +85,19 @@
 
         mounted() {
             this.getVestInList();
+            if (this.formValue) {
+                const formKeys: string[] = Object.keys(this.form.controllerDict);
+                for (let key in this.formValue) {
+                    if (formKeys.indexOf(key) >= 0) this.form.value[key] = this.formValue[key];
+                }
+                this.updateId = this.formValue.id;
+            }
         }
 
         vestInList: any[] = [];
 
         getVestInList() {
-            findClassList().subscribe((list: any) => {
+            findClassList(false).subscribe((list: any) => {
                 this.vestInList = list;
             })
         }

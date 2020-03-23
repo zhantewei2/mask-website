@@ -11,6 +11,12 @@
         <association property="vestRef" column="{id=vestIn}" select="findOneShopClassById" />
     </resultMap>
 
+
+    <resultMap id="shopClassResultMap" type="com.ztwx.mask.entity.ShopClass">
+        <id property="id" column="id"/>
+        <association property="parentClassRef" column="{id=parentClass}" select="findOneShopClassById" />
+    </resultMap>
+
     <select id="infoShop" resultMap="shopResultMap">
         select s.*,i.* from shop as s
         left join shopInfo as i on s.id=i.id
@@ -69,6 +75,9 @@
     </insert>
     <delete id="deleteShop" >
         delete from shop where id=#{id};
+
+    </delete>
+    <delete id="deleteShopInfo">
         delete from shopInfo where id=#{id};
     </delete>
     <update id="updateShop" parameterType="Shop">
@@ -100,22 +109,42 @@
 
 
 <!--    商品类型管理-->
-    <insert id="insertShopClass">
-        insert into classify(name) values(#{name});
+    <insert id="insertShopClass" parameterType="com.ztwx.mask.controller.params.InsertShopClassParams">
+        insert into classify
+        <set>
+            name=#{name},
+            <if test="isMain==true">
+                main=1,
+            </if>
+            <if test="parentClass!=null">
+                parentClass=#{parentClass}
+            </if>
+        </set>
     </insert>
     <update id="updateShopClass" parameterType="ShopClass">
         update classify
             <set>
-                <if test="name!=null">name=#{name},</if>
+                <if test="name!=null and name!=''">name=#{name},</if>
                 <if test="enabled!=null">enabled=#{enabled}</if>
+                <if test="parentClass==0">parentClass=null</if>
+                <if test="parentClass!=null and parentClass!=0">parentClass=#{parentClass}</if>
+                <if test="main!=null">main=#{main}</if>
             </set> where id=#{id}
     </update>
 
-    <select id="queryShopClass" resultType="ShopClass">
-        select * from classify where enabled!=0;
+    <select id="queryShopClass" resultMap="shopClassResultMap">
+        select * from classify
+        <where>
+            enabled!=0
+            <if test="main!=null">
+                and main=#{main}
+            </if>
+        </where>
     </select>
 
     <select id="findOneShopClassById" resultType="ShopClass">
-        select * from classify where id=#{id}
+        <if test="id!=null and id!=0">
+            select * from classify where id=#{id}
+        </if>
     </select>
 </mapper>

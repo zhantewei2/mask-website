@@ -9,10 +9,33 @@
                         <el-input v-model="form.value.name"/>
                     </Value>
                 </Cell>
+                <Cell>
+                    <Label>是否为大类</Label>
+                    <Value>
+                        <el-select v-model="form.value.isMain">
+                            <el-option :value="true" label="是"/>
+                            <el-option :value="false" label="否"/>
+                        </el-select>
+                    </Value>
+                </Cell>
+                <Cell v-if="showSelectParent">
+                    <Label>选择父类</Label>
+                    <Value>
+                        <el-select v-model="form.value.parentClass" clearable>
+                            <el-option
+                                    v-for="i in classLists"
+                                    :key="i.id"
+                                    :value="i.id"
+                                    :label="i.name"
+                            />
+                        </el-select>
+                    </Value>
+                </Cell>
             </Row>
         </Form>
         <Aside class="text-center">
-            <el-button @click="add">新增</el-button>
+            <el-button @click="add" type="primary">新增</el-button>
+            <el-button @click="reset">重置</el-button>
         </Aside>
     </div>
 
@@ -22,11 +45,13 @@
         <Table
                 :loading="tableLoading"
                 :data="lists"
+                :row-class-name="tableRowClassHandle"
         >
             <el-table-column prop="id" label="id"/>
 
-            <el-table-column prop="name" label="name"/>
-
+            <el-table-column prop="name" label="类名"/>
+            <el-table-column prop="mainV" label="是否为大类"/>
+            <el-table-column prop="parentClassName" label="所属大类名"/>
             <el-table-column prop="handle" label="handle">
                 <template slot-scope="scope">
                     <el-button @click="toUpdate(scope.row)" size="mini" type="text">更改</el-button>
@@ -42,17 +67,49 @@
     </div>
 
     <el-dialog :visible.sync="showUpdate">
-        <Row>
-            <Cell>
-                <Label>名称</Label>
-                <Value>
-                    <el-input v-model="updateObj.name"/>
-                </Value>
-            </Cell>
-        </Row>
+        <Form :form="normalUpdateForm">
+            <Row>
+                <Cell>
+                    <Label>名称</Label>
+                    <Value v-form-controller="'name'">
+                        <el-input v-model="normalUpdateForm.value.name"/>
+                    </Value>
+                </Cell>
+                <Cell>
+                    <Label>选择父类</Label>
+                    <Value>
+                        <el-select v-model="normalUpdateForm.value.parentClass" clearable>
+                            <el-option
+                                    v-for="i in classLists"
+                                    :key="i.id"
+                                    :value="i.id"
+                                    :label="i.name"
+                            />
+                        </el-select>
+                    </Value>
+                </Cell>
+            </Row>
+        </Form>
         <div slot="footer">
             <el-button @click="closeUpdate">取消</el-button>
-            <el-button @click="confirmUpdate">确定</el-button>
+            <el-button type="primary" @click="confirmUpdate()">确定</el-button>
+        </div>
+    </el-dialog>
+
+    <el-dialog :visible.sync="showUpdateMain">
+        <Form :form="mainUpdateForm">
+            <Row>
+                <Cell>
+                    <Label>名称</Label>
+                    <Value v-form-controller="'name'">
+                        <el-input v-model="mainUpdateForm.value.name"></el-input>
+                    </Value>
+                </Cell>
+            </Row>
+        </Form>
+        <div slot="footer">
+            <el-button @click="closeUpdate()">取消</el-button>
+            <el-button @click="confirmUpdate(true)" type="primary">确定</el-button>
         </div>
     </el-dialog>
 </div>

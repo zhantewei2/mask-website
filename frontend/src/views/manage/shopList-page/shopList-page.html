@@ -18,14 +18,32 @@
                 </template>
             </el-table-column>
             <el-table-column prop="price" label="价格"/>
-            <el-table-column prop="vestIn" label="类别"/>
+            <el-table-column prop="className" label="类别"/>
             <el-table-column prop="type" label="type"/>
             <el-table-column prop="box" label="box"/>
             <el-table-column prop="ctn" label="ctn"/>
             <el-table-column prop="dimension" label="dimension"/>
             <el-table-column prop="GW" label="GW"/>
             <el-table-column prop="NW" label="NW"/>
+            <el-table-column label="操作">
+                <template slot-scope="scope">
+                    <el-button @click="updateShop(scope.row)" type="text" size="mini">修改</el-button>
+                    <el-popconfirm
+                            @onConfirm="deleteShop(scope.row)"
+                            title="确认删除"
+                    >
+                        <el-button style="margin-left:10px" slot="reference" type="text" size="mini">删除</el-button>
+                    </el-popconfirm>
+                </template>
 
+            </el-table-column>
         </Table>
     </article>
+
+    <el-dialog :visible.sync="visibleUpdate">
+        <shop-add @shopUpdated="shopUpdated" v-if="visibleUpdate" :form-value="updateItem"></shop-add>
+        <div slot="footer">
+            <el-button @click="visibleUpdate=false">close</el-button>
+        </div>
+    </el-dialog>
 </div>

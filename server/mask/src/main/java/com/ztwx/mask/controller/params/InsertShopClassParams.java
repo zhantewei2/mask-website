@@ -10,5 +10,6 @@ import javax.validation.constraints.NotBlank;
 public class InsertShopClassParams {
     @NotBlank()
     private String name;
-
+    private Boolean isMain;
+    private Integer parentClass;
 }

@@ -2,6 +2,7 @@ package com.ztwx.mask.controller;
 
 import com.ztwx.mask.config.Setting;
 import com.ztwx.mask.controller.params.InsertShopClassParams;
+import com.ztwx.mask.controller.params.QueryShopClass;
 import com.ztwx.mask.controller.params.UserLoginParams;
 import com.ztwx.mask.entity.ShopClass;
 import com.ztwx.mask.entity.UserEntity;
@@ -42,7 +43,7 @@ public class Manage {
             BindingResult bindingResult
     ){
         ZTWMethod.ValCheck(bindingResult);
-        return shopService.insertShopClass(insertShopClassParams.getName());
+        return shopService.insertShopClass(insertShopClassParams);
     }
 
     @PostMapping("/m/updateShopClass")
@@ -55,8 +56,10 @@ public class Manage {
     }
 
     @GetMapping("/queryShopClass")
-    public List<ShopClass> queryShopClass(){
-        return shopService.queryShopClass();
+    public List<ShopClass> queryShopClass(
+             QueryShopClass queryShopClass
+            ){
+        return shopService.queryShopClass(queryShopClass.getMain());
     }
 
 

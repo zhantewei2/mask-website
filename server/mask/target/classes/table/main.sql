@@ -1,7 +1,9 @@
 create table if not exists classify(
     id smallint auto_increment primary key,
     name varchar(100) unique,
-    enabled tinyint default 1
+    enabled tinyint default 1,
+    main tinyint default 0,
+    parentClass smallint
 );
 
 create table if not exists baseConfig

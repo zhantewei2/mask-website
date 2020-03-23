@@ -16,14 +16,34 @@
     import {findClassList, insertShopClass, updateShopClass} from "@/requests/manage/manage.requests";
     import {tap} from "rxjs/operators";
 
-    @Component({})
+    @Component({
+        computed: {
+            "showSelectParent": function () {
+                const self: any = this;
+                return !self.form.value.isMain;
+            }
+        }
+    })
     export default class extends Vue {
         form: Form = new Form([
+            {id: "name", validator: [new requiredValidator("必须填写名称")]},
+            {id: "isMain", value: false, validator: []},
+            {id: "parentClass", validator: []}
+        ]);
+        normalUpdateForm: Form = new Form([
+            {id: "name", validator: [new requiredValidator("必须填写名称")]},
+            {id: "parentClass", validator: []}
+        ]);
+        mainUpdateForm: Form = new Form([
             {id: "name", validator: [new requiredValidator("必须填写名称")]}
         ]);
+
+
+        classLists: any[] = [];
         lists: any[] = [];
         tableLoading: boolean = false;
         showUpdate: boolean = false;
+        showUpdateMain: boolean = false;
         updateObj: any = {};
 
         /**
@@ -38,6 +58,7 @@
                     .subscribe(res => {
                         this.$store.dispatch("success", "insert success!!");
                         this.getClass();
+                        this.getMainClass();
                         btnLoad.cancel();
                         this.form.reset();
                     }, (err: any) => {
@@ -48,19 +69,59 @@
             }
         }
 
+        reset() {
+            this.form.reset();
+        }
+
         mounted() {
+            this.getMainClass();
             this.getClass();
+            this.form.valueChange.subscribe((value: any) => {
+                if (value.isMain.value && value.parentClass.value) {
+                    value.parentClass.reset();
+                }
+            })
+        }
+
+        getMainClass() {
+            findClassList(true).subscribe((result: any) => {
+                this.classLists = result;
+            })
         }
 
         getClass() {
             this.tableLoading = true;
             findClassList().subscribe((result: any) => {
-                this.lists = result;
+                const resultMain: any[] = [];
+                const resultNormal: any[] = [];
+                result.forEach((i: any) => {
+                    i.mainV = i.main ? "是" : "否";
+                    i.parentClassName = (i.parentClassRef || {}).name;
+                    i.main ? resultMain.push(i) : resultNormal.push(i);
+                });
+                this.lists = resultMain.concat(resultNormal);
                 this.tableLoading = false;
             })
         }
 
+        tableRowClassHandle({row, rowIndex}: any) {
+            if (row.main) return "bg-light-assist";
+            return "";
+        }
+
         toDelete(i: any) {
+            /**
+             *  delete validator
+             * */
+
+            if (i.main) {
+                const existsOrder: boolean = this.lists.findIndex(i => i.parentClass = i.id) >= 0;
+                if (existsOrder) {
+                    this.$store.dispatch("err", "无法删除一个非空子类的大类");
+                    return;
+                }
+            }
+
             updateShopClass({id: i.id, enabled: 0}).subscribe(() => {
                 this.$store.dispatch("success", "delete success");
                 const index = this.lists.findIndex(item => item.id == i.id);
@@ -72,24 +133,61 @@
         }
 
         toUpdate(i: any) {
-            this.showUpdate = true;
-            this.updateObj = {...i};
+            if (!i.main) {
+                this.showUpdate = true;
+                this.normalUpdateForm.value.name = i.name;
+                this.normalUpdateForm.value.parentClass = i.parentClass;
+            } else {
+                this.showUpdateMain = true;
+                this.mainUpdateForm.value.name = i.name;
+            }
+            this.updateObj = i;
         }
 
         closeUpdate() {
-            this.showUpdate = false;
+            this.showUpdateMain = this.showUpdate = false;
             this.updateObj = {};
         }
 
-        confirmUpdate() {
-            const originItem = this.lists.find((i: any) => i.id === this.updateObj.id);
-            if (this.updateObj.name === originItem.name) return;
-            const {id, name} = this.updateObj;
+        filterUpdateParams(params: any) {
+            const _params = {...params};
+            if (_params.parentClass === "") _params.parentClass = 0;
+            return _params;
+        }
+
+        confirmUpdate(main: boolean) {
+            const form: Form = main ? this.mainUpdateForm : this.normalUpdateForm;
+            const isPass: boolean = form.checkValidators();
+            if (!isPass) return;
+            const value: any = form.value;
+            const updateParams: any = {};
+            for (let key in value) {
+                if (value[key] != this.updateObj[key]) updateParams[key] = value[key];
+            }
+            if (Object.keys(updateParams).length < 1) return;
             const btnLoad = this.$iceBtnLoad();
-            updateShopClass({id, name}).subscribe(() => {
+            const filterParams = this.filterUpdateParams(updateParams);
+            filterParams.id = this.updateObj.id;
+            updateShopClass(filterParams).subscribe(() => {
                 btnLoad.cancel();
-                Object.assign(originItem, this.updateObj);
+                Object.assign(this.updateObj, updateParams);
                 this.$store.dispatch("success", "update success");
+                /**
+                 * 处理归属子集数据一致性
+                 */
+                if (main) {
+                    this.lists.forEach((i: any) => {
+                        if (i.parentClass == this.updateObj.id) i.parentClassName = this.updateObj.name;
+                    })
+                } else {
+                    const parentClass = filterParams.parentClass;
+                    if (parentClass) {
+                        this.updateObj.parentClassName = this.lists.find((i: any) => i.id == parentClass).name;
+                    } else if (parentClass === 0) {
+                        this.updateObj.parentClassName = "";
+                    }
+                }
+
                 this.closeUpdate();
             }, () => {
                 btnLoad.cancel();

@@ -1,9 +1,7 @@
 package com.ztwx.mask.service;
 
 import com.ztwx.mask.controller.Result.QueryProfileResult;
-import com.ztwx.mask.controller.params.Pagination;
-import com.ztwx.mask.controller.params.QueryProfileParams;
-import com.ztwx.mask.controller.params.ShopQueryParams;
+import com.ztwx.mask.controller.params.*;
 import com.ztwx.mask.dao.ShopDao;
 import com.ztwx.mask.entity.Shop;
 import com.ztwx.mask.entity.ShopClass;
@@ -26,8 +24,8 @@ public class ShopService {
     @Autowired
     private ShopDao shopDao;
 
-    public boolean insertShopClass(String name){
-        return shopDao.insertShopClass(name);
+    public boolean insertShopClass(InsertShopClassParams params){
+        return shopDao.insertShopClass(params);
     }
 
     public boolean updateShopClass(ShopClass shopClass){
@@ -35,8 +33,8 @@ public class ShopService {
         return true;
     }
 
-    public List<ShopClass> queryShopClass(){
-        return shopDao.queryShopClass();
+    public List<ShopClass> queryShopClass(Integer main){
+        return shopDao.queryShopClass(main);
     }
 
     @Transactional
@@ -47,8 +45,11 @@ public class ShopService {
         return true;
     }
 
+    @Transactional
     public boolean deleteShop(Long shopId){
-        return shopDao.deleteShop(shopId);
+        shopDao.deleteShopInfo(shopId);
+        shopDao.deleteShop(shopId);
+        return true;
     }
     @Transactional
     public boolean updateShop(Shop shop){
