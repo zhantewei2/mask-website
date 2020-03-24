@@ -4,12 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Setter
 @Getter
-public class UpdateById <T,G>{
+public class MultipleUpdateParams<T> {
     @NotNull
-    private G id;
-    @NotNull
-    private T body;
+    private List<T> list;
 }

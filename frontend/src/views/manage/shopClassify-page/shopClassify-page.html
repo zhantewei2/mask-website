@@ -35,17 +35,34 @@
         </Form>
         <Aside class="text-center">
             <el-button @click="add" type="primary">新增</el-button>
-            <el-button @click="reset">重置</el-button>
+            <el-button @click="reset" type="info">重置</el-button>
         </Aside>
     </div>
 
     <div class="cm-content-card">
+        <transition name="animate-fade">
+            <el-alert
+            v-if="mainOrderChangedList.length"
+            title="大类顺序已经被更改，是否保存?"
+            show-icon
+            :closable="false"
+            type="warning" style="margin-bottom:10px">
 
+                <div class="between">
+                    <el-button :disabled="confirmMainOrderLoading" @click="confirmMainOrderChanged" size="mini" type="warning">
+                        确定
+                        <i v-if="confirmMainOrderLoading" class="fa fa-loader ice-fa-loader"></i>
+                    </el-button>
+                    <el-button @click="resetMainOrderChanged" size="mini" type="success">重置</el-button>
+                </div>
+            </el-alert>
+        </transition>
 
         <Table
                 :loading="tableLoading"
                 :data="lists"
                 :row-class-name="tableRowClassHandle"
+                :disablePagination="true"
         >
             <el-table-column prop="id" label="id"/>
 
@@ -59,8 +76,14 @@
                             @onConfirm="toDelete(scope.row)"
                             title="确认删除"
                     >
-                        <el-button style="margin-left:10px;" slot="reference" size="mini" type="text">删除</el-button>
+                        <el-button style="margin-left:10px;margin-right:10px" slot="reference" size="mini" type="text">删除</el-button>
                     </el-popconfirm>
+                    <el-tooltip content="主类显示排序" v-if="scope.row.main" placement="right">
+                        <span>
+                            <el-button  @click="moveMain(scope.row,true)" circle size="mini" icon="el-icon-arrow-up" ></el-button>
+                            <el-button @click="moveMain(scope.row,false)" circle size="mini" icon="el-icon-arrow-down"></el-button>
+                        </span>
+                    </el-tooltip>
                 </template>
             </el-table-column>
         </Table>

@@ -33,6 +33,14 @@ public class ShopService {
         return true;
     }
 
+    @Transactional
+    public boolean updateShopClassMulti(List<ShopClass> listShopClass){
+        for(ShopClass shopClass:listShopClass){
+            ZTWMethod.CheckUpdate(shopDao.updateShopClass(shopClass));
+        }
+        return true;
+    }
+
     public List<ShopClass> queryShopClass(Integer main){
         return shopDao.queryShopClass(main);
     }

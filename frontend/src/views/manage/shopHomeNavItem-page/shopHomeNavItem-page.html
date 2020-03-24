@@ -1,0 +1,74 @@
+<div>
+    <div class="cm-search-card">
+        <div class="title">新增</div>
+        <el-alert title="介绍" type="warning">
+            <div class="an-fade-in">{{itdAdd}}</div>
+        </el-alert>
+        <Form :form="insertShopForm">
+            <Row>
+                <Cell>
+                    <Label>名称</Label>
+                    <Value v-form-controller="'name'">
+                        <el-input v-model="insertShopForm.value.name" clearable/>
+                    </Value>
+                </Cell>
+                <Cell>
+                    <Label>类型</Label>
+                    <Value>
+                        <el-select v-model="insertShopForm.value.type">
+                            <el-option value="carousel" label="轮播图"/>
+                            <el-option value="nav" label="首页导航图" />
+                        </el-select>
+                    </Value>
+                </Cell>
+            </Row>
+            <Row>
+                <Cell >
+                    <transition name="animate-fade">
+                        <Label v-if="useNav!='href'">导航站内类型</Label>
+                    </transition>
+                    <transition name="animate-fade">
+                        <Value v-if="useNav!='href'">
+                            <el-select v-model="insertShopForm.value.classify" clearable>
+                                <el-option v-for="i in classifyList" :key="i.id" :value="i.name" >
+                                    <span>{{i.name}}</span>
+                                    <el-tag size="mini" v-if="i.main" style="margin-left:10px">大类</el-tag>
+                                </el-option>
+                            </el-select>
+                        </Value>
+                    </transition>
+                </Cell>
+                <Cell>
+                    <transition name="animate-fade">
+                        <Label  v-if="useNav!='classify'">导航站外URL</Label>
+                    </transition>
+                    <transition name="animate-fade">
+                        <Value  v-if="useNav!='classify'">
+                            <el-input v-model="insertShopForm.value.href" clearable/>
+                        </Value>
+                    </transition>
+                </Cell>
+
+            </Row>
+            <el-alert type="success" style="margin: 1rem 0;" :closable="false">
+                {{itdImg[insertShopForm.value.type]}} 。当然，任意尺寸不会变形。
+            </el-alert>
+            <Row>
+                <Cell>
+                    <Label>图片</Label>
+                    <Value v-form-controller="'img'">
+                        <baidu-upload v-model="insertShopForm.value.img" />
+                    </Value>
+                </Cell>
+            </Row>
+        </Form>
+        <Aside class="text-right">
+            <el-button @click="add" type="primary">新增</el-button>
+            <el-button @click="reset">重置</el-button>
+        </Aside>
+    </div>
+
+    <div class="cm-content-card">
+
+    </div>
+</div>

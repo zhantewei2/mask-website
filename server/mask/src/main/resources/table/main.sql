@@ -3,7 +3,8 @@ create table if not exists classify(
     name varchar(100) unique,
     enabled tinyint default 1,
     main tinyint default 0,
-    parentClass smallint
+    parentClass smallint,
+    toOrder mediumint default 1 comment '排序用'
 );
 
 create table if not exists baseConfig

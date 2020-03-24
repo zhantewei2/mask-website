@@ -1,5 +1,4 @@
 import {http} from "ztwx-fire-ui/http";
-import {Observable, of, throwError} from "rxjs";
 
 export interface UpdateParams<T> {
     id: any;
@@ -22,17 +21,22 @@ export const insertShopClass = (p: InsertShopParams) => {
     return http.xhr("post", "manage/m/insertShopClass", p);
 };
 
-export interface UpdateShopParams {
+export interface UpdateShopClassParams {
     name?: string;
     id: number;
     enabled?: number;
-
+    parentClass?:number;
+    toOrder?:number;
 }
 
 
-export const updateShopClass = (p: UpdateShopParams) => {
+export const updateShopClass = (p: UpdateShopClassParams) => {
     return http.xhr("post", "manage/m/updateShopClass", p);
 };
+export const updateShopClassMulti=(list:UpdateShopClassParams[])=>
+    http.xhr("post","manage//m/updateShopClassMultiple",{
+        list
+    });
 
 
 export const reqInsertShop = (p: any) => {

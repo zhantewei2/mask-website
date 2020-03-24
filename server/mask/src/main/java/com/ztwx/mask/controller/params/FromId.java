@@ -7,9 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
-public class UpdateById <T,G>{
+public class FromId<T> {
     @NotNull
-    private G id;
-    @NotNull
-    private T body;
+    private T id;
 }

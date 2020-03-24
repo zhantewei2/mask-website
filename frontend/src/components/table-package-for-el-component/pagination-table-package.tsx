@@ -15,12 +15,13 @@ import {concatMap, delay} from "rxjs/operators";
                     {
                         h("el-table", {
                             props: Object.assign(self.$attrs, self.$props, self.elementTableProps),
-                            scopedSlots: self.$scopedSlots
+                            scopedSlots: self.$scopedSlots,
+                            on:self.$listerns
                         }, [])
                     }
                     <div class="yo-pagination-container">
                         {
-                            h("el-pagination", {
+                            self.disablePagination?null:h("el-pagination", {
                                 on: {
                                     "size-change": self.sizeChange,
                                     "current-change": self.currentChange
@@ -50,6 +51,7 @@ export default class extends Vue {
     @Prop({}) pageChange: PageChangeFn;
     @Prop({default: 0}) total: number;
     @Prop({default: false}) loading: boolean;
+    @Prop({default:false})disablePagination:boolean;
     pagination_layout = "total,sizes,prev,pager,next,jumper";
     page_sizes = [10, 20, 30, 40, 50];
     pageSize: number = 10; //每页条目数

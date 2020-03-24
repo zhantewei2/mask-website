@@ -15,4 +15,5 @@ public class ShopClass {
     private Integer main;
     private Integer parentClass;
     private ShopClass parentClassRef;
+    private Integer toOrder;
 }

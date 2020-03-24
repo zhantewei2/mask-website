@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ztwx.mask.dao.ShopHomeDao">
+    <insert id="insertShopHomeNav" parameterType="ShopHomeNavItem">
+        call new_homeShopNav(#{name},#{des},#{img},#{classifyId},#{href},#{type})
+    </insert>
+
+    <update id="updateShopHomeNav" parameterType="ShopHomeNavItem">
+        update homeShopNav
+        <set>
+            <if test="name!=null and name!=''">name=#{name},</if>
+            <if test="des!=null and des!=''">des=#{des},</if>
+            <if test="toOrder!=null">toOrder=#{toOrder},</if>
+            <if test="img!=null and img!=''">img=#{img},</if>
+            <if test="classifyId!=null">classifyId=#{classifyId},</if>
+            <if test="href!=null">href=#{href}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteShopHomeNav">
+        delete from homeShopNav
+            where id=#{id}
+    </delete>
+
+    <select id="queryShopHomeNavItemList" resultType="ShopHomeNavItem">
+        select * from homeShopNav
+        <where>
+            <if test="type!=null and type!=''">
+                type=#{type}
+            </if>
+        </where>
+    </select>
+</mapper>

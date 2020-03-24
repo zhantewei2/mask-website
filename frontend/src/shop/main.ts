@@ -11,13 +11,18 @@ import VueRouter from "vue-router";
 import router from "./router/main.routes";
 import store from "./store/index";
 import "./components.module";
+import {shopClassify} from "@/shop/ShopClassify";
+
 
 Vue.config.productionTip = false;
 Vue.use(ElementUi);
 
-
-new Vue({
-    router,
-    store,
-    render: h => h(App)
-}).$mount('#app');
+shopClassify.canEnter((err)=>{
+    if(!err) {
+        new Vue({
+            router,
+            store,
+            render: h => h(App)
+        }).$mount('#app');
+    }
+});

@@ -13,7 +13,12 @@
     import Vue from "vue";
     import {Component} from "vue-property-decorator";
     import {Form, requiredValidator} from "ztwx-fire-ui/form";
-    import {findClassList, insertShopClass, updateShopClass} from "@/requests/manage/manage.requests";
+    import {
+        findClassList,
+        insertShopClass,
+        updateShopClass,
+        updateShopClassMulti
+    } from "@/requests/manage/manage.requests";
     import {tap} from "rxjs/operators";
 
     @Component({
@@ -41,6 +46,9 @@
 
         classLists: any[] = [];
         lists: any[] = [];
+        listMain:any[]=[];
+        listMainOrigin:any[]=[];
+        listNormal:any[]=[];
         tableLoading: boolean = false;
         showUpdate: boolean = false;
         showUpdateMain: boolean = false;
@@ -99,11 +107,16 @@
                     i.parentClassName = (i.parentClassRef || {}).name;
                     i.main ? resultMain.push(i) : resultNormal.push(i);
                 });
+                this.listMain=this.sortListMain(resultMain);
+                this.listMainOrigin=JSON.parse(JSON.stringify(resultMain));
+                this.listNormal=resultNormal;
                 this.lists = resultMain.concat(resultNormal);
                 this.tableLoading = false;
             })
         }
-
+        sortListMain(listMain:any[]):any[]{
+            return listMain.sort((pre:any,next:any)=>pre.toOrder-next.toOrder)
+        }
         tableRowClassHandle({row, rowIndex}: any) {
             if (row.main) return "bg-light-assist";
             return "";
@@ -194,6 +207,61 @@
                 this.$store.dispatch("err", "update failure");
                 this.closeUpdate();
             })
+        }
+        moveMain(row:any,up:boolean){
+            const rowIndex=this.listMain.findIndex(i=>i.id==row.id);
+
+            const replaceIndex=up?rowIndex-1:rowIndex+1;
+            if(replaceIndex<0||replaceIndex>=this.listMain.length)return;
+            const replaceItem=this.listMain[replaceIndex];
+            //replace
+            const tempOrder=replaceItem.toOrder;
+            replaceItem.toOrder=row.toOrder;
+            row.toOrder=tempOrder;
+
+            this.listMain[rowIndex]=replaceItem;
+            this.listMain[replaceIndex]=row;
+
+            this.lists=this.listMain.concat(this.listNormal);
+            this.checkMainList();
+        }
+        mainOrderChangedList:any[]=[];
+        confirmMainOrderLoading:boolean=false;
+
+        checkMainList(){
+
+            let originMathed:any;
+            const changedList=[];
+            for(let nextItem of this.listMain){
+                originMathed=this.listMainOrigin.find(i=>i.id==nextItem.id);
+                if(originMathed.toOrder!=nextItem.toOrder){
+                    changedList.push(nextItem);
+                }
+            }
+            this.mainOrderChangedList=changedList;
+        }
+        confirmMainOrderChanged(){
+            this.confirmMainOrderLoading=true;
+            updateShopClassMulti(
+                this.mainOrderChangedList.map(i=>({
+                    id:i.id,
+                    toOrder:i.toOrder
+                })))
+            .subscribe(result=>{
+                this.confirmMainOrderLoading=false;
+                this.mainOrderChangedList=[];
+                this.getClass();
+                this.$store.dispatch("success","更新成功");
+            },()=>{
+                this.confirmMainOrderLoading=false;
+                this.$store.dispatch("err","更新失败");
+                this.resetMainOrderChanged();
+            })
+        }
+        resetMainOrderChanged(){
+            this.listMain=JSON.parse(JSON.stringify(this.listMainOrigin));
+            this.lists=this.listMain.concat(this.listNormal);
+            this.mainOrderChangedList=[];
         }
     }
 </script>

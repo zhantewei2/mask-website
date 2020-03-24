@@ -110,16 +110,7 @@
 
 <!--    商品类型管理-->
     <insert id="insertShopClass" parameterType="com.ztwx.mask.controller.params.InsertShopClassParams">
-        insert into classify
-        <set>
-            name=#{name},
-            <if test="isMain==true">
-                main=1,
-            </if>
-            <if test="parentClass!=null">
-                parentClass=#{parentClass}
-            </if>
-        </set>
+        call new_classify(#{name},#{main},#{parentClass});
     </insert>
     <update id="updateShopClass" parameterType="ShopClass">
         update classify
@@ -129,6 +120,7 @@
                 <if test="parentClass==0">parentClass=null</if>
                 <if test="parentClass!=null and parentClass!=0">parentClass=#{parentClass}</if>
                 <if test="main!=null">main=#{main}</if>
+                <if test="toOrder!=null">toOrder=#{toOrder}</if>
             </set> where id=#{id}
     </update>
 
