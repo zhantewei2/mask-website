@@ -20,10 +20,9 @@
   display: inline-flex;
   align-items: center;
   flex-flow: column;
-
+  overflow:hidden;
+  position:relative;
   .shop-item-image {
-    @include Radius();
-
     .img {
       @include Radius();
       transition: all .3s;
@@ -45,7 +44,7 @@
   @extend %shop-item-card;
   @include Radius();
   @include AutoFill($shop-item-card-primary);
-
+  @include Shadow(card);
   .shop-item-image {
     @include AutoFill($shop-item-card-primary-img);
   }
@@ -54,8 +53,7 @@
     font-size: 1.5rem;
     font-weight: bold;
     color: lucency_text($--color-main);
-    margin-top: 1rem;
-
+    margin: 1.5rem;
     &:hover {
       color: $--color-main;
     }

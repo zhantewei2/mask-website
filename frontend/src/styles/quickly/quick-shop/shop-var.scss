@@ -18,9 +18,9 @@ $shop-nav-item-thumb: (
 
 $shop-item-card-primary: (
         h:20rem,
-        m:1rem,
+        m:1rem 2rem,
         mb:2rem,
-        px:4rem
+        bg:$--color-bg
 );
 $shop-item-card-primary-img: (
         h: 200px,
@@ -28,7 +28,7 @@ $shop-item-card-primary-img: (
 );
 
 $shop-item-card-secondary: (
-        m:1rem,
+                m:1rem,
         mb:2rem,
         px:1rem
 );

@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {Component} from "vue-property-decorator";
+import {Component, Prop} from "vue-property-decorator";
 import {Form, requiredValidator} from "ztwx-fire-ui/form";
 import {findClassList} from "@/requests/manage/manage.requests";
 import {reqInsertShopNav} from "@/requests/manage/homeShopNav.requests";
@@ -22,6 +22,8 @@ export default class extends Vue{
     添加首页 轮播图、及下方导航图。
     `;
     classifyList:any[]=[];
+    @Prop({default:""})specifyNav:"nav"|"specify"|"";
+
     insertShopForm:Form=new Form([
         {id:"name",validator:[new requiredValidator("必须填写名称")]},
         {id:"img",validator:[new requiredValidator("必须上传图片")]},
@@ -56,11 +58,13 @@ export default class extends Vue{
         if(!isPass)return;
         const value:any={...this.insertShopForm.value};
         value.classifyId=value.classify;
+
         const btnLoad=this.$iceBtnLoad();
         reqInsertShopNav(value)
         .subscribe(()=>{
             this.$store.dispatch("success","新增成功");
             btnLoad.cancel();
+            this.insertShopForm.reset();
         },(e)=>{
             this.$store.dispatch("err",e);
             btnLoad.cancel();

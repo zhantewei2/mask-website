@@ -17,8 +17,9 @@ export const navData: NavListItem[] = [
                     },
                     {
                         label:"首页管理",children:[
-                            {label:"首页轮播管理",path:"shopCarousel"},
-                            {label:"首页商品导航管理",path:"shopNav"}
+                            {label:"首页导航图列表",path:"shopNavManage"},
+                            {label:"首页轮播列表",path:"shopCarousel"},
+                            {label:"新增商品轮播导航",path:"shopNav"}
                         ]
                     }
                 ]

@@ -11,6 +11,7 @@ import "./styles/main.scss";
 import "./components/components.module";
 import VueRouter from "vue-router";
 import {http} from "@/utils/Http";
+import "./business-components/business-components.module";
 
 Vue.config.productionTip = false;
 Vue.use(ElementUi);

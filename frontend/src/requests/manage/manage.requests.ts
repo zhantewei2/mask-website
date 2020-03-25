@@ -7,6 +7,8 @@ export interface UpdateParams<T> {
 
 
 export const findClassList = (main: boolean | undefined = undefined) => {
+
+
     return http.xhr("get", "manage/queryShopClass",
         main === undefined ? undefined : {main: main ? 1 : 0});
 };

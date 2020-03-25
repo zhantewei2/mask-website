@@ -25,12 +25,12 @@
             <Row>
                 <Cell >
                     <transition name="animate-fade">
-                        <Label v-if="useNav!='href'">导航站内类型</Label>
+                        <Label v-if="useNav!='href'||specifyNav=='classify'">导航站内类型</Label>
                     </transition>
                     <transition name="animate-fade">
-                        <Value v-if="useNav!='href'">
+                        <Value v-if="useNav!='href'||specifyNav=='classify'">
                             <el-select v-model="insertShopForm.value.classify" clearable>
-                                <el-option v-for="i in classifyList" :key="i.id" :value="i.name" >
+                                <el-option :label="i.name" v-for="i in classifyList" :key="i.id" :value="i.id" >
                                     <span>{{i.name}}</span>
                                     <el-tag size="mini" v-if="i.main" style="margin-left:10px">大类</el-tag>
                                 </el-option>
@@ -40,10 +40,10 @@
                 </Cell>
                 <Cell>
                     <transition name="animate-fade">
-                        <Label  v-if="useNav!='classify'">导航站外URL</Label>
+                        <Label  v-if="useNav!='classify'||specifyNav=='classify'">导航站外URL</Label>
                     </transition>
                     <transition name="animate-fade">
-                        <Value  v-if="useNav!='classify'">
+                        <Value  v-if="useNav!='classify'||specifyNav=='classify'">
                             <el-input v-model="insertShopForm.value.href" clearable/>
                         </Value>
                     </transition>
@@ -66,9 +66,5 @@
             <el-button @click="add" type="primary">新增</el-button>
             <el-button @click="reset">重置</el-button>
         </Aside>
-    </div>
-
-    <div class="cm-content-card">
-
     </div>
 </div>

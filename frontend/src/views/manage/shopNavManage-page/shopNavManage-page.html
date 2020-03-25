@@ -1,0 +1,43 @@
+<div class="cm-search-card">
+    <header class="text-right">
+        <el-button size="mini" plain type="primary">排序</el-button>
+    </header>
+    <div class="rel">
+        <main
+            class="shop-list-card rel" style="min-height: 300px">
+            <yo-mini-loader :show="loading"/>
+
+            <div
+                v-for="i in navList"
+                :key="i.id"
+                :class="{
+                    'shopNavItem-info':i.infoShow
+                }"
+
+                @click="itemInfo($event,i)"
+                class="shopNavItem-container"
+            >
+                <div
+                    class="shopNavItem shop-item-card-primary"
+                    @mouseleave="itemLeave($event,i)"
+                    @mouseenter="itemMouseEnter(i)"
+                >
+                    <div class="shop-item-image" :style="{
+                        backgroundImage:'url('+i.img+')'
+                    }"></div>
+                    <header>{{i.name}}</header>
+                    <transition v-if="i.coverShow&&!isSort" name="animate-fade">
+                        <div class="an-fade-in item-cover flex-center">
+                            <i class="za za-eye"></i>
+                        </div>
+                    </transition>
+                </div>
+                <transition name="animate-width">
+                    <div v-if="i.infoShow" class="shopNavItem-info-card">
+                        <self-item-update :item="i" />
+                    </div>
+                </transition>
+            </div>
+        </main>
+    </div>
+</div>
