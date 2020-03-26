@@ -9,9 +9,9 @@
         update homeShopNav
         <set>
             <if test="name!=null and name!=''">name=#{name},</if>
-            <if test="des!=null and des!=''">des=#{des},</if>
+            <if test="des!=null">des=#{des},</if>
             <if test="toOrder!=null">toOrder=#{toOrder},</if>
-            <if test="img!=null and img!=''">img=#{img},</if>
+            <if test="img!=null">img=#{img},</if>
             <if test="classifyId!=null">classifyId=#{classifyId},</if>
             <if test="href!=null">href=#{href}</if>
         </set>

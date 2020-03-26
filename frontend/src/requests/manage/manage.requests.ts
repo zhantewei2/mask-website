@@ -8,9 +8,12 @@ export interface UpdateParams<T> {
 
 export const findClassList = (main: boolean | undefined = undefined) => {
 
-
-    return http.xhr("get", "manage/queryShopClass",
-        main === undefined ? undefined : {main: main ? 1 : 0});
+    return http.cacheXhr({
+        method:"get",
+        relativeUrl:"manage/queryShopClass",
+        params:main===undefined?undefined:{main:main?1:0},
+        expires:1000*60*60
+    })
 };
 
 export interface InsertShopParams {

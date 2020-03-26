@@ -14,10 +14,10 @@
                     'shopNavItem-info':i.infoShow
                 }"
 
-                @click="itemInfo($event,i)"
                 class="shopNavItem-container"
             >
                 <div
+                     @click="itemInfo($event,i)"
                     class="shopNavItem shop-item-card-primary"
                     @mouseleave="itemLeave($event,i)"
                     @mouseenter="itemMouseEnter(i)"
@@ -26,15 +26,15 @@
                         backgroundImage:'url('+i.img+')'
                     }"></div>
                     <header>{{i.name}}</header>
-                    <transition v-if="i.coverShow&&!isSort" name="animate-fade">
-                        <div class="an-fade-in item-cover flex-center">
+                    <transition  name="animate-fade">
+                        <div v-if="i.coverShow&&!isSort" class="item-cover flex-center">
                             <i class="za za-eye"></i>
                         </div>
                     </transition>
                 </div>
                 <transition name="animate-width">
                     <div v-if="i.infoShow" class="shopNavItem-info-card">
-                        <self-item-update :item="i" />
+                        <self-item-update @close="itemUpdateClose" :item="i" />
                     </div>
                 </transition>
             </div>

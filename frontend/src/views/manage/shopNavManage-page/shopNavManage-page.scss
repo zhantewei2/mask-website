@@ -27,9 +27,10 @@
   }
 }
 .shopNavItem-info-card{
-  width:200px;
+  width:250px;
   overflow:hidden;
   background:white;
+  box-sizing: border-box;
   z-index:-1;
-  padding:1rem;
+
 }

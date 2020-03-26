@@ -122,7 +122,9 @@ public class Manage {
             BindingResult bindingResult
     ){
         ZTWMethod.ValCheck(bindingResult);
-        return shopHomeService.updateShopHomeNav(updateParams.getBody());
+        ShopHomeNavItem shopHomeNavItem=updateParams.getBody();
+        shopHomeNavItem.setId(updateParams.getId());
+        return shopHomeService.updateShopHomeNav(shopHomeNavItem);
     }
 
     @PostMapping("/m/updateShopHomeNavMulti")

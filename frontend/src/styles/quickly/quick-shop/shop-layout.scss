@@ -44,7 +44,7 @@ body {
   .shop-home-nav-item, .shop-home-nav-item-link {
     @include AutoFill($shop-nav-item);
     @include center();
-    @include use-transition(fast);
+    @include use-transition($type:fast);
     cursor: pointer;
     position: relative;
 

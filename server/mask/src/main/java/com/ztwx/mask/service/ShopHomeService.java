@@ -27,7 +27,7 @@ public class ShopHomeService {
     }
     public boolean updateShopHomeNav(ShopHomeNavItem shopHomeNavItem){
         ZTWMethod.CheckUpdate(
-            shopHomeDao.updateShopHome(shopHomeNavItem)
+            shopHomeDao.updateShopHomeNav(shopHomeNavItem)
         );
         return true;
     }
@@ -35,7 +35,7 @@ public class ShopHomeService {
     public boolean updateShopHomeNavMulti(List<ShopHomeNavItem> shopHomeNavItemList){
        for(ShopHomeNavItem item:shopHomeNavItemList){
            ZTWMethod.CheckUpdate(
-                   shopHomeDao.updateShopHome(item)
+                   shopHomeDao.updateShopHomeNav(item)
            );
        }
        return true;

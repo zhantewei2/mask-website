@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface ShopHomeDao {
     public void insertShopHomeNav(ShopHomeNavItem shopHomeNavItem);
-    public Integer updateShopHome(ShopHomeNavItem shopHomeNavItem);
+    public Integer updateShopHomeNav(ShopHomeNavItem shopHomeNavItem);
 
     public Integer deleteShopHomeNav(@Param("id")Integer id);
 

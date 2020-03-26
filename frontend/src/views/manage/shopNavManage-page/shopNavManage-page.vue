@@ -34,23 +34,11 @@ export default class extends Vue{
     documentClick:Subscription;
     mounted(){
         this.getList(this.type);
-        this.documentClick=fromEvent(document.documentElement,"click").subscribe((e:any)=>{
-            const target=e.target;
-            if(this.infoItem){
-                if(!this.infoItem.el.contains(target)&&this.infoItem.el!=target){
-                    this.leaveInfo();
-                }
-            }
-        });
-    }
-
-    beforeDestroy(){
-        this.documentClick.unsubscribe();
     }
     beforeHandleList(list:any[]){
         list.forEach(i=>{
             i.coverShow=false;
-            i.infoShow=false;
+            i.infoShow=true;
             i.el=null;
         })
     }
@@ -80,7 +68,6 @@ export default class extends Vue{
 
     }
     itemMouseEnter(i:any){
-
         if(this.activeItem!=i){
             this.clearItem(this.activeItem);
         }
@@ -98,18 +85,18 @@ export default class extends Vue{
 
     infoItem:any=null;
     itemInfo(e:any,i:any) {
-        if(this.infoItem){
-            return;
-        }
-        i.infoShow=true;
-        i.el=e.currentTarget;
-        this.infoItem=i;
+        i.infoShow=!i.infoShow;
     }
     leaveInfo(){
         if(this.infoItem){
             this.infoItem.infoShow=false;
             this.infoItem=null;
         }
+    }
+    itemUpdateClose(i:any){
+        setTimeout(()=>{
+            i.infoShow=false;
+        })
     }
 }
 </script>

@@ -32,7 +32,6 @@ export default class extends Vue{
     @Prop({})value:any;
     @Watch("value",{immediate:true})
     watchValue(v:any){
-        console.log("v",v);
         this.selectValue=v;
     }
     list:any=[];
