@@ -14,7 +14,7 @@ export const ticketKey="ztwx-ticket";
 export const requestHost="/devTest";
 
 //项目名
-export const projectName="口罩管理系统";
+export const projectName="管理系统";
 
 //供应商名
 export const providerName="ztwx";

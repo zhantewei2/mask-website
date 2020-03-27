@@ -27,7 +27,7 @@ export default class extends Vue{
     insertShopForm:Form=new Form([
         {id:"name",validator:[new requiredValidator("必须填写名称")]},
         {id:"img",validator:[new requiredValidator("必须上传图片")]},
-        {id:"type",value:'nav',validator:[new requiredValidator("必须选择图片类型")]},
+        {id:"type",validator:[new requiredValidator("必须选择图片类型")]},
         {id:"href",validator:[]},
         {id:"classify",validator:[]}
     ]);

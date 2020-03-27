@@ -12,7 +12,8 @@ export const findClassList = (main: boolean | undefined = undefined) => {
         method:"get",
         relativeUrl:"manage/queryShopClass",
         params:main===undefined?undefined:{main:main?1:0},
-        expires:1000*60*60
+        expires:1000*60*60,
+        destroyOnXhr:[/insertShopClass/,/updateShopClass/,/updateShopClassMultiple/]
     })
 };
 

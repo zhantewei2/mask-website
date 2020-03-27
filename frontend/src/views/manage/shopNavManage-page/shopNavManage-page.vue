@@ -12,12 +12,16 @@
 <script lang="ts">
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
-import {reqQueryShopNavItem} from "@/requests/manage/homeShopNav.requests";
-import {fromEvent, Observable, Observer, Subscription} from "rxjs";
+import {reqQueryShopNavItem, reqUpdateShopNavItemMulti} from "@/requests/manage/homeShopNav.requests";
+import {forkJoin, fromEvent, Observable, Observer, Subscription} from "rxjs";
 import ItemUpdateComponent from "../shopNavItemUpdate-component/shopNavItemUpdate-component.vue";
 
 @Component({
     computed:{
+        "sortChanged":function(){
+            const self:any=this;
+            return !!self.sortChange();
+        }
     },
     components:{
         "self-item-update":ItemUpdateComponent
@@ -29,10 +33,13 @@ export default class extends Vue{
     selectItem:any="";
     navList:any[]=[];
     loading:boolean=false;
+    constructor() {
+        super();
+    }
 
-    activeItem:any="";
-    documentClick:Subscription;
+
     mounted(){
+        console.log(this);
         this.getList(this.type);
     }
     beforeHandleList(list:any[]){
@@ -54,50 +61,89 @@ export default class extends Vue{
         reqQueryShopNavItem(type).subscribe(result=>{
             this.loading=false;
             this.beforeHandleList(result);
-            this.navList=result;
+            this.navList=result.sort((pre:any,next:any)=>pre.toOrder-next.toOrder);
         },()=>{
             this.loading=false;
             this.$store.dispatch("err","列表获取失败");
         })
     }
-    clearItem(i:any){
-        if(i){
-            i.coverShow=false;
-        }
-        this.activeItem=undefined;
-
-    }
     itemMouseEnter(i:any){
-        if(this.activeItem!=i){
-            this.clearItem(this.activeItem);
-        }
         i.coverShow=true;
-        this.activeItem=i;
     }
 
     itemLeave(e:Event,i:any){
-        i&&this.clearItem(i);
+        i.coverShow=false;
+    }
+
+    originList:any=[];
+    // sortItemActive:any="";
+    sortStart(){
+
+        this.navList.forEach(i=>i.infoShow=false);
+        this.originList=JSON.parse(JSON.stringify(this.navList));
+        this.isSort=true;
+
+    }
+    sortClose() {
+        this.isSort=false;
+        this.navList.forEach(i => i.infoShow = true);
+    }
+    sortMove(i:any,before:boolean){
+        // this.sortItemActive=i;
+        const activeIndex=this.navList.findIndex(j=>j===i);
+        if(before&&i<=0)return;
+        if(!before&&i>=this.navList.length-1)return;
+        const nextItemIndex=before?activeIndex-1:activeIndex+1;
+        let nextItem:any=this.navList[nextItemIndex];
+        const tmp=nextItem;
+        const tmpOrder=nextItem.toOrder;
+        nextItem.toOrder=i.toOrder;
+        i.toOrder=tmpOrder;
+        this.navList.splice(nextItemIndex,1,i);
+        this.navList.splice(activeIndex,1,nextItem);
+    }
+    sortChange():any[]|undefined{
+        const changedList:any[]=[];
+        this.originList.forEach((i:any)=>{
+            const nowItem=this.navList.find(j=>j.id===i.id);
+            if(nowItem.toOrder!=i.toOrder)changedList.push(nowItem);
+        });
+        return changedList.length?changedList:undefined;
+    }
+    sortConfirm(){
+        const sortList=this.sortChange();
+        if(!sortList)return;
+        const btnLoad=this.$iceBtnLoad();
+        reqUpdateShopNavItemMulti({
+            list:sortList.map(i=>({
+                id:i.id,
+                toOrder:i.toOrder
+            }))
+        }).subscribe(result=>{
+            btnLoad.cancel();
+            this.originList=JSON.parse(JSON.stringify(this.navList));
+            this.$store.dispatch("success","更改成功");
+        },()=>{
+            btnLoad.cancel();
+            this.$store.dispatch("err","修改失败");
+        })
+    }
+
+    sortRest(){
+        this.navList=JSON.parse(JSON.stringify(this.originList));
+    }
+    sortCancel(){
+        if(this.sortChange())this.sortRest();
+        this.sortClose();
     }
 
     /**
      * info
      */
-
-    infoItem:any=null;
     itemInfo(e:any,i:any) {
         i.infoShow=!i.infoShow;
     }
-    leaveInfo(){
-        if(this.infoItem){
-            this.infoItem.infoShow=false;
-            this.infoItem=null;
-        }
-    }
-    itemUpdateClose(i:any){
-        setTimeout(()=>{
-            i.infoShow=false;
-        })
-    }
+
 }
 </script>
 <style scoped src="./shopNavManage-page.scss" lang="scss"></style>

@@ -18,24 +18,14 @@ export default class extends Vue{
     value1:string="";
     data1:string="";
     data2:string="";
-     options:any= [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }];
+    data:Array<string>=new Array<string>(20).fill("1");
+
      mounted(){
          console.log("sample-test2 mounted");
+     }
+     toggle:boolean=true;
+     change(){
+         this.toggle=!this.toggle;
      }
 }
 </script>

@@ -6,7 +6,7 @@
 -->
 
 <template>
-    <div>
+    <div class="ice-form-tag">
         <slot></slot>
     </div>
 </template>

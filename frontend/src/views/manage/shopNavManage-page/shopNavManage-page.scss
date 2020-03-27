@@ -1,10 +1,3 @@
-.shopNavItem-container{
-  display:flex;
-  &.shopNavItem-info{
-  }
-  margin:2rem;
-  z-index:1;
-}
 .shopNavItem{
   margin:0;
   .shop-item-image{
@@ -26,6 +19,22 @@
     }
   }
 }
+
+.shopNavItem-container{
+  transition:all .3s ease;
+  position:relative;
+  display:flex;
+  &.shopNavItem-info{
+  }
+  margin:2rem;
+  z-index:1;
+  &.shopNavItem-sort{
+    .shopNavItem{
+      filter:blur(5px);
+    }
+  }
+}
+
 .shopNavItem-info-card{
   width:250px;
   overflow:hidden;
@@ -33,4 +42,15 @@
   box-sizing: border-box;
   z-index:-1;
 
+}
+.shopNavItem-sort-cover{
+  z-index:10;
+  position:absolute;
+  left:0;
+  width:100%;
+  bottom:2rem;
+  padding:1rem;
+  display:flex;
+  justify-content: space-between;
+  box-sizing: border-box;
 }

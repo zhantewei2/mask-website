@@ -24,6 +24,7 @@ export const formControlDirective = {
     inserted(el: any, binding: DirectiveBinding, vnode: VNode) {
         const id = el[ControllerIDKEY];
         const instance: any = vnode.componentInstance;
+
         const form: any = findFormComponent(instance.$parent);
         const controller: Controller = form.$data.controllerDict[id];
         el[ControllerErrKEY] = false;

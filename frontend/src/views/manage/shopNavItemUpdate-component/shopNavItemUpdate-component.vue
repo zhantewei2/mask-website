@@ -7,9 +7,10 @@
 
 <template>
     <div class="manage-shop-nav-update">
+        <Form :form="updateForm">
         <transition name="animate-slide-toggle-left">
         <article class="manage-shop-nav-update-article" v-if="!isUpdateImg">
-            <Form :form="updateForm">
+            <main>
                 <Row>
                     <Cell>
                         <Label>名称</Label>
@@ -18,21 +19,21 @@
                         </Value>
                     </Cell>
                 </Row>
-                <Row>
-                    <Cell v-if="!updateForm.value.href">
+                <Row v-if="!updateForm.value.href">
+                    <Cell>
                         <Label>导航类</Label>
                         <business-select-shop-classify v-model="updateForm.value.classifyId"/>
                     </Cell>
                 </Row>
-                <Row>
-                    <Cell v-if="!updateForm.value.classifyId">
+                <Row v-if="!updateForm.value.classifyId">
+                    <Cell>
                         <Label>外部连接</Label>
                         <Value>
                             <el-input v-model="updateForm.value.href"/>
                         </Value>
                     </Cell>
                 </Row>
-            </Form>
+            </main>
             <footer class="ice-line text-center">
                 <el-button @click="toUpdateValue" v-if="updateForm.isChanged" type="primary" plain size="mini">更新</el-button>
                 <el-button @click="resetValueForm" v-if="updateForm.isChanged" type="primary" plain size="mini">重置</el-button>
@@ -44,21 +45,28 @@
         </transition>
         <transition name="animate-slide-toggle-right">
             <article class="manage-shop-nav-update-article" v-if="isUpdateImg">
-                <div>
+                <Value class="flex-center" v-form-controller="'img'">
                     <baidu-upload v-model="updateForm.value.img" />
-                </div>
+                </Value>
                 <footer class="text-center">
-                    <el-button type="text" @click="updateImgClose">
+                    <el-button size="mini" type="text" @click="updateImgClose" :disabled="imgUpdateLoading">
                         <span class="center">
                                 <i class="za za-left"></i>返回
                         </span>
                     </el-button>
-                    <el-button v-if="imgChange" size="mini" type="primary" plain>保存图片</el-button>
-                </footer>
+                    <el-button
+                        :disabled="imgUpdateLoading"
+                        @click="resetValueForm" size="mini" type="primary" pain v-if="updateForm.controllerDict.img.changed">
+                        重置
+                    </el-button>
 
+                    <el-button
+                    @click="saveImg"
+                    v-if="updateForm.controllerDict.img.changed&&updateForm.value.img" size="mini" type="primary" plain>保存图片</el-button>
+                </footer>
             </article>
         </transition>
-
+        </Form>
     </div>
 </template>
 
@@ -75,13 +83,13 @@ export default class extends Vue{
         {id:"name",validator:[new requiredValidator("不能为空")]},
         {id:"img",validator:[new requiredValidator("必须设置图片")]},
         {id:"classifyId",validator:[]},
-        {id:"href",validator:[]},
+        {id:"href3",validator:[]},
     ]);
 
     originItem:any={};
     canUpdated:boolean=false;
     isUpdateImg:boolean=false;
-    imgChange:boolean=false;
+    imgChanged:boolean=false;
 
     resetValueForm(){
         this.updateForm.resetOriginValue();
@@ -106,6 +114,7 @@ export default class extends Vue{
         this.isUpdateImg=!this.isUpdateImg;
     }
     updateImgClose(){
+        this.updateForm.resetOriginValue();
         this.isUpdateImg=false;
     }
     valueUpdateLoading:boolean=false;
@@ -121,17 +130,39 @@ export default class extends Vue{
         if(updateValue.classifyId)updateValue.href="";
 
         this.valueUpdateLoading=true;
+        const btnLoad=this.$iceBtnLoad();
         reqUpdateShopNavItem({
             id:this.originItem.id,
             body:updateValue
         }).subscribe(()=>{
             this.updateForm.updateOriginValue(updateValue);
             this.valueUpdateLoading=false;
+            btnLoad.cancel();
             Object.assign(this.originItem,updateValue);
             this.$store.dispatch("success","更新成功");
         },err=>{
+            btnLoad.cancel();
             this.valueUpdateLoading=false;
             this.$store.dispatch("err",err);
+        })
+    }
+    saveImg(){
+        const img=this.updateForm.value.img;
+        this.imgUpdateLoading=true;
+        const updateValue:any={img};
+        const btnLoad=this.$iceBtnLoad();
+        reqUpdateShopNavItem({
+            id:this.originItem.id,
+            body:updateValue
+        }).subscribe(()=>{
+            this.imgUpdateLoading=false;
+            this.updateForm.updateOriginValue(updateValue);
+            Object.assign(this.originItem,updateValue);
+            btnLoad.cancel();
+            this.imgUpdateLoading=false;
+        },err=>{
+            btnLoad.cancel();
+            this.imgUpdateLoading=false;
         })
     }
 }

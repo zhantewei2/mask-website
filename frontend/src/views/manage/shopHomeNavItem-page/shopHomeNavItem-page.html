@@ -14,7 +14,7 @@
                 </Cell>
                 <Cell>
                     <Label>类型</Label>
-                    <Value>
+                    <Value v-form-controller="'type'">
                         <el-select v-model="insertShopForm.value.type">
                             <el-option value="carousel" label="轮播图"/>
                             <el-option value="nav" label="首页导航图" />
@@ -50,7 +50,7 @@
                 </Cell>
 
             </Row>
-            <el-alert type="success" style="margin: 1rem 0;" :closable="false">
+            <el-alert type="success" style="margin: 1rem 0;" :closable="false" v-if="insertShopForm.value.type">
                 {{itdImg[insertShopForm.value.type]}} 。当然，任意尺寸不会变形。
             </el-alert>
             <Row>

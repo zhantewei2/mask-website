@@ -1,6 +1,11 @@
 <div class="cm-search-card">
     <header class="text-right">
-        <el-button size="mini" plain type="primary">排序</el-button>
+        <el-button v-if="!isSort" @click="sortStart()" plain type="primary">排序</el-button>
+        <span v-else>
+            <el-button v-if="sortChanged" @click="sortConfirm"  plain type="success">确定</el-button>
+            <el-button v-if="sortChanged" @click="sortRest()" plain type="info">重置</el-button>
+            <el-button @click="sortCancel()" plain >关闭</el-button>
+        </span>
     </header>
     <div class="rel">
         <main
@@ -11,13 +16,13 @@
                 v-for="i in navList"
                 :key="i.id"
                 :class="{
-                    'shopNavItem-info':i.infoShow
+                    'shopNavItem-info':i.infoShow,
+                    'shopNavItem-sort':isSort
                 }"
-
                 class="shopNavItem-container"
             >
                 <div
-                     @click="itemInfo($event,i)"
+                     @click="!isSort&&itemInfo($event,i)"
                     class="shopNavItem shop-item-card-primary"
                     @mouseleave="itemLeave($event,i)"
                     @mouseenter="itemMouseEnter(i)"
@@ -34,7 +39,13 @@
                 </div>
                 <transition name="animate-width">
                     <div v-if="i.infoShow" class="shopNavItem-info-card">
-                        <self-item-update @close="itemUpdateClose" :item="i" />
+                        <self-item-update :item="i" />
+                    </div>
+                </transition>
+                <transition name="animate-fade">
+                    <div class="shopNavItem-sort-cover" v-if="isSort">
+                        <div @click="sortMove(i,true)" v-cm-ripple class="rel ice-avatar large bg-lucency-primary"><i class="za za-left"></i></div>
+                        <div @click="sortMove(i,false)" v-cm-ripple class="rel ice-avatar large bg-lucency-primary"><i class="za za-right"></i></div>
                     </div>
                 </transition>
             </div>
