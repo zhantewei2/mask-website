@@ -1,12 +1,15 @@
 package com.ztwx.mask.service;
 
 import com.ztwx.mask.dao.ShopHomeDao;
+import com.ztwx.mask.entity.KeyValue;
 import com.ztwx.mask.entity.ShopHomeNavItem;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.exceptions.ExceptionFactory;
 import org.cm.pro.HttpException.ReqBad;
 import org.cm.pro.HttpException.ReqBadEnum;
 import org.cm.pro.utils.ZTWMethod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,4 +54,33 @@ public class ShopHomeService {
         );
         return true;
     }
+
+    public void deleteKeyValue(String key){
+                ZTWMethod.CheckUpdate(
+        shopHomeDao.deleteKeyValue(key));
+    }
+
+    public void insertKeyValue(KeyValue keyValue){
+        try {
+            shopHomeDao.insertKeyValue(keyValue);
+        }  catch (DuplicateKeyException e){
+            throw new ReqBad(ReqBadEnum.InsertDup);
+        }
+    }
+
+    public void updateKeyValue(KeyValue keyValue){
+        ZTWMethod.CheckUpdate(
+            shopHomeDao.updateKeyValue(keyValue)
+        );
+    }
+    public KeyValue queryKeyValue(String key){
+        return shopHomeDao.queryKeyValue(key);
+    }
+
+    public List<KeyValue> queryKeyValueMutil(List<String> keys){
+        return shopHomeDao.queryKeyValueMulti(keys);
+    }
+
+
+
 }

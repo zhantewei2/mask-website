@@ -10,3 +10,10 @@ create table if not exists homeShopNav(
     href varchar(500) comment 'nav to href',
     type varchar(20) comment 'type:carousel,nav '
 );
+
+drop table if exists keyValue;
+create table if not exists keyValue(
+    k varchar(255) primary key,
+    v varchar(500),
+    des varchar(500) comment 'description'
+)

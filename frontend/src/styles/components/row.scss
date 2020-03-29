@@ -17,6 +17,9 @@
   min-width: $--yo-label-minW;
   padding-right: $--yo-label-p-right;
   color: $--color-font-beauty;
+  &.changed{
+    color:$--color-assist;
+  }
 }
 
 .yo-cell-content {
@@ -26,8 +29,17 @@
   align-items: center;
 }
 
+
 .yo-row-aside {
   padding: $--yo-row-aside-p;
+}
+
+@each $sizeKey,$value in $--yo-row-size{
+  .yo-form-size-#{$sizeKey}{
+    .yo-cell-label{
+      min-width:map-get($value,label-minW) !important;
+    }
+  }
 }
 
 @for $i from 1 through 10 {

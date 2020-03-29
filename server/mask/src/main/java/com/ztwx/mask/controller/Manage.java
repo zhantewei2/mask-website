@@ -1,6 +1,7 @@
 package com.ztwx.mask.controller;
 
 import com.ztwx.mask.controller.params.*;
+import com.ztwx.mask.entity.KeyValue;
 import com.ztwx.mask.entity.ShopClass;
 import com.ztwx.mask.entity.ShopHomeNavItem;
 import com.ztwx.mask.entity.UserEntity;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Key;
 import java.util.List;
 
 @Slf4j
@@ -152,4 +155,48 @@ public class Manage {
         return shopHomeService.deleteShopHomeNav(fromId.getId());
     }
 
+    @PostMapping("/queryKeyValue")
+    public KeyValue queryKeyValue(
+            @RequestBody FromId<String> fromId,
+            BindingResult bindingResult
+    ){
+        ZTWMethod.ValCheck(bindingResult);
+        return shopHomeService.queryKeyValue(fromId.getId());
+    }
+
+    @PostMapping("/queryKeyValueMulti")
+    public List<KeyValue> queryKeyValueMulti(
+            @RequestBody MultipleUpdateParams<String> multipleUpdateParams,
+            BindingResult bindingResult
+    ){
+        ZTWMethod.ValCheck(bindingResult);
+        List<String> keyList=multipleUpdateParams.getList();
+        return shopHomeService.queryKeyValueMutil(keyList.size()>0?keyList:null);
+    }
+
+    @PostMapping("/deleteKeyValue")
+    public void deleteKeyValue(
+            @RequestBody FromId<String> fromId,
+            BindingResult bindingResult
+    ){
+        ZTWMethod.ValCheck(bindingResult);
+        shopHomeService.deleteKeyValue(fromId.getId());
+    }
+
+    @PostMapping("/updateKeyValue")
+    public void updateKeyValue(
+            @RequestBody KeyValue keyValue,
+            BindingResult bindResult
+    ){
+        ZTWMethod.ValCheck(bindResult);
+        shopHomeService.updateKeyValue(keyValue);
+    }
+    @PostMapping("/insertKeyValue")
+    public void insertKeyValue(
+            @RequestBody KeyValue keyValue,
+            BindingResult bindingResult
+    ){
+        ZTWMethod.ValCheck(bindingResult);
+        shopHomeService.insertKeyValue(keyValue);
+    }
 }

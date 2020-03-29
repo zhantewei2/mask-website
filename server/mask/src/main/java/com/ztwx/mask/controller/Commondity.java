@@ -85,4 +85,5 @@ public class Commondity {
         ZTWMethod.ValCheck(bindingResult);
         return shopService.infoShop(fromLongId.getId());
     }
+
 }

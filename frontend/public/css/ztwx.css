@@ -4,7 +4,7 @@
   font-weight: 400;
   font-display: auto;
   
-  src: url("./ztwx.woff2?name=1585243828095") format("woff2"), url("./ztwx.woff?name=1585243828095") format("woff"); 
+  src: url("./ztwx.woff2?name=1585475467486") format("woff2"), url("./ztwx.woff?name=1585475467486") format("woff"); 
 }
 
 .za {
@@ -109,31 +109,35 @@
   content: "\ea02";
 }
 
-.za-eye::before {
+.za-delete::before {
   content: "\ea03";
 }
 
-.za-left::before {
+.za-eye::before {
   content: "\ea04";
 }
 
-.za-left-caret::before {
+.za-left::before {
   content: "\ea05";
 }
 
-.za-return::before {
+.za-left-caret::before {
   content: "\ea06";
 }
 
-.za-return-1::before {
+.za-return::before {
   content: "\ea07";
 }
 
-.za-right::before {
+.za-return-1::before {
   content: "\ea08";
 }
 
-.za-user::before {
+.za-right::before {
   content: "\ea09";
+}
+
+.za-user::before {
+  content: "\ea0a";
 }
 

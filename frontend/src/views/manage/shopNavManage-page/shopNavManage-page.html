@@ -8,47 +8,52 @@
         </span>
     </header>
     <div class="rel">
-        <main
-            class="shop-list-card rel" style="min-height: 300px">
+        <main style="min-height: 300px">
             <yo-mini-loader :show="loading"/>
-
-            <div
-                v-for="i in navList"
-                :key="i.id"
-                :class="{
-                    'shopNavItem-info':i.infoShow,
-                    'shopNavItem-sort':isSort
-                }"
-                class="shopNavItem-container"
-            >
+            <div v-if="navList&&navList.length===0">
+                <el-alert
+                        show-icon
+                type="warning" description="图片集为空，请添加商品或轮播导航图"/>
+            </div>
+            <transition-group v-if="navList&&navList.length>0" name="animation-list" tag="div" class="rel">
                 <div
-                     @click="!isSort&&itemInfo($event,i)"
-                    class="shopNavItem shop-item-card-primary"
-                    @mouseleave="itemLeave($event,i)"
-                    @mouseenter="itemMouseEnter(i)"
+                    v-for="(i,index) in navList"
+                    :key="i.id"
+                    :class="{
+                        'shopNavItem-info':i.infoShow,
+                        'shopNavItem-sort':isSort
+                    }"
+                    class="shopNavItem-container"
                 >
-                    <div class="shop-item-image" :style="{
-                        backgroundImage:'url('+i.img+')'
-                    }"></div>
-                    <header>{{i.name}}</header>
-                    <transition  name="animate-fade">
-                        <div v-if="i.coverShow&&!isSort" class="item-cover flex-center">
-                            <i class="za za-eye"></i>
+                    <div
+                         @click="!isSort&&itemInfo($event,i)"
+                        class="shopNavItem shop-item-card-primary"
+                        @mouseleave="itemLeave($event,i)"
+                        @mouseenter="itemMouseEnter(i)"
+                    >
+                        <div class="shop-item-image" :style="{
+                            backgroundImage:'url('+i.img+')'
+                        }"></div>
+                        <header>{{i.name}}</header>
+                        <transition  name="animate-fade">
+                            <div v-if="i.coverShow&&!isSort" class="item-cover flex-center">
+                                <i class="za za-eye"></i>
+                            </div>
+                        </transition>
+                    </div>
+                    <transition name="animate-width">
+                        <div v-if="i.infoShow" class="shopNavItem-info-card">
+                            <self-item-update @delete="deleteItem(i,index)" :item="i" />
+                        </div>
+                    </transition>
+                    <transition name="animate-fade">
+                        <div class="shopNavItem-sort-cover" v-if="isSort">
+                            <div @click="sortMove(i,true)" v-cm-ripple class="rel ice-avatar large bg-lucency-primary"><i class="za za-left"></i></div>
+                            <div @click="sortMove(i,false)" v-cm-ripple class="rel ice-avatar large bg-lucency-primary"><i class="za za-right"></i></div>
                         </div>
                     </transition>
                 </div>
-                <transition name="animate-width">
-                    <div v-if="i.infoShow" class="shopNavItem-info-card">
-                        <self-item-update :item="i" />
-                    </div>
-                </transition>
-                <transition name="animate-fade">
-                    <div class="shopNavItem-sort-cover" v-if="isSort">
-                        <div @click="sortMove(i,true)" v-cm-ripple class="rel ice-avatar large bg-lucency-primary"><i class="za za-left"></i></div>
-                        <div @click="sortMove(i,false)" v-cm-ripple class="rel ice-avatar large bg-lucency-primary"><i class="za za-right"></i></div>
-                    </div>
-                </transition>
-            </div>
+            </transition-group>
         </main>
     </div>
 </div>

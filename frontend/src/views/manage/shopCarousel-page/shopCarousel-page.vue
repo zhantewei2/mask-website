@@ -12,8 +12,12 @@
 <script lang="ts">
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
-
-@Component({})
+  import ShopNavManage from "../shopNavManage-page/shopNavManage-page.vue";
+@Component({
+        components:{
+            "self-shop-nav-manage":ShopNavManage
+        }
+})
 export default class extends Vue{
 
 }

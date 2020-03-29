@@ -23,14 +23,14 @@
 .shopNavItem-container{
   transition:all .3s ease;
   position:relative;
-  display:flex;
+    display:inline-flex;
   &.shopNavItem-info{
   }
   margin:2rem;
   z-index:1;
   &.shopNavItem-sort{
     .shopNavItem{
-      filter:blur(5px);
+      filter:saturate(200%);
     }
   }
 }

@@ -15,7 +15,10 @@
     import {Form, requiredValidator, minValidator} from "ztwx-fire-ui/form";
     import {findClassList, reqInsertShop, reqUpdateShop} from "@/requests/manage/manage.requests";
 
-    @Component({})
+
+    @Component({
+
+    })
     export default class extends Vue {
         @Prop({}) formValue: any;
         updateId: string = "";

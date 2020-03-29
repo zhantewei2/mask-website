@@ -21,6 +21,9 @@ export const navData: NavListItem[] = [
                             {label:"首页轮播列表",path:"shopCarousel"},
                             {label:"新增商品轮播导航",path:"shopNav"}
                         ]
+                    },
+                    {
+                        label:'基本信息',path:"keyValue"
                     }
                 ]
             },

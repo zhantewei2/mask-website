@@ -31,4 +31,40 @@
             </if>
         </where>
     </select>
+
+    <select id="queryKeyValue" resultType="KeyValue">
+        select * from keyValue where k=#{key}
+    </select>
+
+    <select id="queryKeyValueMulti" resultType="KeyValue">
+        select * from keyValue
+        <if test="keys!=null">
+            where k in
+            <foreach collection="keys" open="(" close=")" separator=","
+                item="item" index="index"
+            >
+            #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <insert id="insertKeyValue" parameterType="KeyValue">
+        insert into keyValue(k,v,des) values(#{k},#{v},#{des})
+    </insert>
+
+    <update id="updateKeyValue" parameterType="KeyValue">
+        update keyValue
+        <set>
+            <if test="v!=null and v!=''">
+                v=#{v},
+            </if>
+            <if test="des!=null and des!=''">
+                des=#{des}
+            </if>
+        </set>
+        where k=#{k}
+    </update>
+    <delete id="deleteKeyValue">
+        delete from keyValue where k=#{key}
+    </delete>
 </mapper>

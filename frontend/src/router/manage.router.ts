@@ -5,7 +5,7 @@ const routes:IceRouterConfig[]=[
     {path:"shopAdd",component:()=>import("../views/manage/shopAdd-page/shopAdd-page.vue"),pageName:"新增商品"},
     {path:"shopCarousel",pageName:"首页轮播列表",component:()=>import("../views/manage/shopCarousel-page/shopCarousel-page.vue")},
     {path:"shopNav",pageName:"新增商品轮播导航",component:()=>import("../views/manage/shopHomeNavItem-page/shopHomeNavItem-page.vue")},
-    {path:"shopNavManage",pageName:"首页导航图列表",component:()=>import("../views/manage/shopNavManage-page/shopNavManage-page.vue")}
-
+    {path:"shopNavManage",pageName:"首页导航图列表",component:()=>import("../views/manage/shopNavManage-page/shopNavManage-page.vue")},
+    {path:"keyValue",pageName:"基本信息",component:()=>import("../views/manage/keyValue-page/keyValue-page.vue")}
 ];
 export default routes;

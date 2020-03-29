@@ -51,6 +51,7 @@ export class RelativeFixed{
         };
         top=getTop(position);
         left=getLeft(position);
+
         if (top!==undefined&&top<minH){
             if(position=="top"){
                 top=getTop(position="bottom");
@@ -75,7 +76,7 @@ export class RelativeFixed{
         }
         if (top!==undefined&&top+this.space+targetH>maxH){
             if(position=="bottom"){
-                top=getLeft(position="top");
+                top=getTop(position="top");
             }else{
                 top=maxH-targetH-this.space;
             }

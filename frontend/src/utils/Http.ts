@@ -15,9 +15,14 @@ http.setAfterHandler(({status, content}, retry: any) => new Promise<any>((resolv
         }
         if (status != 200) {
             //登录过期
-            if (status == 400 && result.type == 2) {
-                const win: any = window;
-                win.vueStore && win.vueStore.dispatch("user/logExpired");
+            if (status == 400) {
+                const vueStore:any=(window as any).vueStore;
+                if(result.type==2){
+                    vueStore&&vueStore.dispatch("user/logExpired");
+                }
+                if(result.type==201){
+                    vueStore&&vueStore.dispatch("err","已存在");
+                }
             }
             reject(content);
         } else {

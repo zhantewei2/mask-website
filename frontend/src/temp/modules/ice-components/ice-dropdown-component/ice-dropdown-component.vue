@@ -36,6 +36,7 @@ export default class extends Vue{
     }
 
     click(){
+
         if(this.triggerType!=="click")return;
         this.toggle();
     }
@@ -65,8 +66,8 @@ export default class extends Vue{
      * show dropdown
      */
     async show(){
-        if(this.isShow)return;
 
+        if(this.isShow)return;
         const isPristine:boolean=this.initializeTemplate();
         /**
          * 如果初始化执行，则创建后，再执行true ，以便transition 动画正常工作.
