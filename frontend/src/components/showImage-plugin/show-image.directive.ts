@@ -14,7 +14,7 @@ export const showImageDirective = (showImage: any) => ({
 
         cover.addEventListener("click", () => {
             const img: any = el.querySelector("img");
-            showImage.show(img.src);
+            img&&showImage.show(img.src);
         });
 
 

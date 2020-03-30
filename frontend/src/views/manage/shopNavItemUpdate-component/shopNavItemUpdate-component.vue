@@ -19,13 +19,13 @@
                         </Value>
                     </Cell>
                 </Row>
-                <Row v-if="!updateForm.value.href">
+                <Row v-if="!updateForm.value.href||(updateForm.value.href&&updateForm.value.classifyId)">
                     <Cell>
                         <Label :class="{changed:updateForm.controllerDict.classifyId.changed}">导航类</Label>
                         <business-select-shop-classify v-model="updateForm.value.classifyId"/>
                     </Cell>
                 </Row>
-                <Row v-if="!updateForm.value.classifyId">
+                <Row v-if="!updateForm.value.classifyId||(updateForm.value.href&&updateForm.value.classifyId)">
                     <Cell>
                         <Label :class="{changed:updateForm.controllerDict.href.changed}">外部连接</Label>
                         <Value>
@@ -146,11 +146,12 @@ export default class extends Vue{
         const isPass:boolean=this.updateForm.checkValidators();
         if(!isPass)return;
         const updateValue=this.updateForm.getUpdatedValue();
-        if(!updateValue)return;
 
+
+        if(!updateValue)return;
+        if(updateValue.classifyId==="")updateValue.classifyId=0;
         if(updateValue.href)delete updateValue.classifyId;
         if(updateValue.classifyId)delete updateValue.href;
-
         this.valueUpdateLoading=true;
         const btnLoad=this.$iceBtnLoad();
         reqUpdateShopNavItem({

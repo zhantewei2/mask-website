@@ -35,7 +35,7 @@ body {
 
 .shop-home-nav {
   background-color: $--color-light-bg;
-  margin-bottom: 1rem;
+  margin-bottom:$shop-home-nav-bottom;
 
   .item-wrapper {
     display: inline-block;
@@ -77,15 +77,84 @@ body {
 }
 
 .shop-home-content {
-
+  $navHeight:map-get($shop-home-header,h) + map-get($shop-nav-item,h) + $shop-home-nav-bottom;
+  min-height:calc(100vh - #{$navHeight});
 }
 
 .shop-home-footer {
+  @include AutoFill($shop-home-footer);
+  .content{
+    margin:$shop-home-footer-content-m;
+    display:flex;
+    flex-wrap: wrap;
+    .item{
+      vertical-align: top;
+      box-sizing: border-box;
+      width:33%;
+      display: inline-block;
+      padding:0 2rem;
+      &:not(:last-of-type){
+        border-right:1px solid $--color-light-border;
+      }
+    }
+    .left{
+      @include Iflex-center();
 
+    }
+  }
+
+  @include SmallMedia(){
+    .item{
+      width:99% !important;
+      margin-top:2rem;
+      border-right:none !important;
+    }
+  }
 }
 
 .shop-carousel-div {
   height: 100%;
   width: 100%;
   background-size: cover;
+}
+.shop-footer-line{
+    max-width:300px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.shop-footer-light-line{
+  @extend .shop-footer-line;
+  font-size:13px;
+  color:$--color-font-beauty-des;
+  position:relative;
+  padding:0.5rem 1rem;
+  label{
+    min-width:100px;
+    display: inline-block;
+    font-size:15px;
+    color:$--color-font-beauty;
+    i{
+      font-size:20px;
+      color:$--color-font-beauty;
+      font-weight: bold;
+      vertical-align: bottom;
+    }
+  }
+  &.keyValue{
+    border-radius:15px;
+    //background-color:$--color-light-border;
+    margin-bottom:0.8rem;
+    padding: 0.7rem 1.5rem;
+
+  }
+  &.keyValue:not(:last-of-type){
+     border-bottom:1px solid $--color-light-border;
+  }
+  &.link{
+    cursor: pointer;
+    text-decoration:underline;
+  }
+}
+.ice-brand{
+  margin-bottom:0.5rem;
 }

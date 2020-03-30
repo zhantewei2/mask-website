@@ -12,7 +12,14 @@
             <if test="des!=null">des=#{des},</if>
             <if test="toOrder!=null">toOrder=#{toOrder},</if>
             <if test="img!=null">img=#{img},</if>
-            <if test="classifyId!=null">classifyId=#{classifyId},</if>
+            <if test="classifyId!=null">
+                <if test="classifyId==0">
+                    classifyId=null,
+                </if>
+                <if test="classifyId!=0">
+                    classifyId=#{classifyId},
+                </if>
+            </if>
             <if test="href!=null">href=#{href}</if>
         </set>
         where id=#{id}

@@ -41,8 +41,13 @@
     <select id="totalShop" parameterType="java.util.Map" resultType="java.util.Map">
         select count(id) as total from shop
         <where>
-            <if test="vestIn!=null">
-                vestIn=#{vestIn}
+            <if test="vestIns!=null">
+                vestIn in
+                <foreach item="item" index="index" collection="vestIns"
+                         open="(" separator="," close=")"
+                >
+                    #{item}
+                </foreach>
             </if>
         </where>
     </select>

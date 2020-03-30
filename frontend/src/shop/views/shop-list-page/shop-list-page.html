@@ -1,17 +1,26 @@
 <div class="shop-article">
     <shop-itd>
-        <div slot="name" class="shop-itd-title">{{routeIdName}} Mask</div>
+        <div slot="name" class="shop-itd-title">{{dataItem.name}} Mask</div>
 
     </shop-itd>
-    <div class="shop-list-card">
-        <svg-loader :top="'80px'" :show="loading"/>
-        <shop-item
-                @navClick="navClick(i)"
-                :primary="false"
-                :itemRef="i"
-                v-for="(i,index) in shopList"
-                :key="index"
-        >
-        </shop-item>
-    </div>
+    <article class="shop-list-article">
+        <div class="shop-list-card">
+            <svg-loader :top="'80px'" :show="loading"/>
+            <shop-item
+                    @navClick="navClick(i)"
+                    :primary="false"
+                    :itemRef="i"
+                    v-for="(i,index) in shopList"
+                    :key="index"
+            >
+            </shop-item>
+        </div>
+        <footer class="shop-article-pagination">
+            <el-pagination
+                layout="prev,pager,next"
+                :total="total"
+                :current-page="currentPage"
+            />
+        </footer>
+    </article>
 </div>

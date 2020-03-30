@@ -1,4 +1,15 @@
 import {findClassList} from "@/requests/manage/manage.requests";
+import {queryAllInfo} from "@/requests/shop/shop-base.request";
+
+export interface ShopNavItem{
+    href?:string;
+    type?:"nav"|"carousel";
+    toOrder:number;
+    img?:string;
+    id:number;
+    name:string;
+}
+
 
 export interface NavDataItem{
     id:number;
@@ -19,6 +30,9 @@ export class ShopClassify{
     loaded:boolean=false;
     classList:any[]=[];
     _navData:NavDataItem[]=[];
+    homeCarouselList:ShopNavItem[]=[];
+    homeNavList:ShopNavItem[]=[];
+    baseDict:Record<string,string>={};
     get navData(){
         return this.beforeNavData.concat(this._navData).concat(this.afterNavData);
     }
@@ -33,17 +47,41 @@ export class ShopClassify{
     }
 
     getClassify(cb:(err:boolean,data:NavDataItem[])=>void){
-        findClassList().subscribe((list:any[])=>{
+        queryAllInfo().subscribe((res:any)=>{
             this.loaded=true;
-            this.classList=list;
-            this.getNavData(list);
-            this.handleList(list);
-            cb(false,list);
+            this.classList=res.shopClassList;
+            this.getNavData(this.classList);
+            this.handleList(this.classList);
+            this.switchNavItem(res.shopHomeNavItemList);
+            this.keyValueToDict(res.keyValueList);
+            cb(false,this.classList);
         },()=>{
             this.loaded=false;
             cb(true,[])
-        })
+        });
     }
+    switchNavItem(list:ShopNavItem[]){
+        this.homeCarouselList=[];
+        this.homeNavList=[];
+        list.forEach((i:ShopNavItem)=>{
+            if(i.type==="nav"){
+                this.homeNavList.push(i)
+            }else if(i.type==="carousel"){
+                this.homeCarouselList.push(i);
+            }
+        });
+        this.homeCarouselList.sort((pre,next)=>pre.toOrder-next.toOrder);
+        this.homeNavList.sort((pre,next)=>pre.toOrder-next.toOrder);
+    }
+
+
+    keyValueToDict(keyValueList:any[]){
+        for(let i of keyValueList){
+            this.baseDict[i.k]=i.v;
+        }
+    }
+
+
     handleList(list:any){
         this.getNavData(list);
         this.getNameDict(list);

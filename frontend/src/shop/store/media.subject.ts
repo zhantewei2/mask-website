@@ -1,5 +1,5 @@
 import {merge, Subject, of, fromEvent, Observable} from "rxjs";
-import {map, throttleTime} from "rxjs/operators";
+import {debounce, map, throttleTime,debounceTime} from "rxjs/operators";
 
 export interface MediaRef {
     mobile: boolean;
@@ -9,24 +9,24 @@ export interface MediaRef {
 const mobileWidth = 1000;
 
 const html: HTMLElement | null = document.querySelector("html");
-
+let currentMediaRef:MediaRef={
+    mobile:false,
+    mediaWidth:0
+};
 const isMobile = (w: number): boolean => w < mobileWidth;
 const getWidth = (): number | undefined => {
-    console.debug("getWidth");
     return html?.offsetWidth;
 };
 const getMediaRef = (): MediaRef => {
     const w = getWidth();
-    return {
-        mediaWidth: w || 0,
-        mobile: w ? isMobile(w) : false
-    }
+    currentMediaRef.mediaWidth=getWidth()||0;
+    currentMediaRef.mobile=isMobile(currentMediaRef.mediaWidth);
+    return currentMediaRef;
 };
 
 export const mediaObserver: Observable<MediaRef> = merge(
     of(getMediaRef()),
     fromEvent(window, "resize").pipe(
-        throttleTime(200),
         map(() => getMediaRef())
     )
 );
