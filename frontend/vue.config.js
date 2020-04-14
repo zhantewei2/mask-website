@@ -10,7 +10,7 @@ const current_env = process.env.NODE_ENV;
 /**
  * append watch dir
  */
-const {ManageTempalteWatchDir} = require("ztwx-fire-ui/lib/ztwManager/main");
+const {ManageTempalteWatchDir} = require("@ztwx/auto-template");
 
 if (current_env === "dev") new ManageTempalteWatchDir().watch(path.join(host_path, "src"));
 

@@ -1,4 +1,4 @@
-import {http} from "ztwx-fire-ui/http";
+import {http} from "@ztwx/http";
 import {UpdateById, UpdateMulti} from "@/requests/manage/publicReq.interface";
 
 export interface HomeShopNavItem{

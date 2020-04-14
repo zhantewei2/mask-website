@@ -1,4 +1,4 @@
-import {http} from "ztwx-fire-ui/http";
+import {http} from "@ztwx/http";
 import {Observable,of,throwError} from "rxjs";
 import {mergeMap} from "rxjs/operators";
 
