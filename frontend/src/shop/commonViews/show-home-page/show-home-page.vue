@@ -32,7 +32,6 @@
             this.navData=shopClassify.navData;
             this.baseInfo=shopClassify.baseDict;
             this.footerNavList=shopClassify.classList.filter((i:any)=>i.main);
-            console.log(this.footerNavList)
         }
         footerValueKeyList=[
             {icon:"email",k:"email"},

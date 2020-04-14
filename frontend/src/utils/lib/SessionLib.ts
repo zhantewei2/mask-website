@@ -1,5 +1,5 @@
-import {session} from "ztwx-fire-ui/session";
-import {http} from "ztwx-fire-ui/http";
+import {session} from "@condyyobeta/fire-ui/session";
+import {http} from "@ztwx/http";
 import {NavListItem,dataFactory} from "../../ice";
 
 export interface EntryGuardCall{

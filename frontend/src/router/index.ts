@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import CorePage from "../commonViews/core-page/core-page.vue";
 import ViewsRoutes from "./views.router"
 import {sessionGuardNavListCombine} from "../utils/Session";
-import {http} from "ztwx-fire-ui/http";
+import {http} from "@ztwx/http";
 import {navData} from "./navData";
 import store from "../store";
 

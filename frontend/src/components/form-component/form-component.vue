@@ -16,7 +16,7 @@
 <script lang="ts">
     import Vue from "vue";
     import {Component, Prop, Watch} from "vue-property-decorator";
-    import {Controller, Form} from "ztwx-fire-ui/form";
+    import {Controller, Form} from "@ztwx/form";
 
     @Component({
         name: "ice-form"

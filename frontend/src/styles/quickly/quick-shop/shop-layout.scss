@@ -27,6 +27,9 @@ body {
       font-size: 2rem;
     }
   }
+  .logo{
+    height:60px;
+  }
 }
 
 .shop-home-nav-wrapper {
@@ -100,6 +103,9 @@ body {
     .left{
       @include Iflex-center();
 
+    }
+    .footer-logo{
+      height:120px;
     }
   }
 

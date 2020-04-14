@@ -10,7 +10,7 @@ const current_env = process.env.NODE_ENV;
 /**
  * append watch dir
  */
-const {ManageTempalteWatchDir} = require("ztwx-fire-ui/lib/ztwManager/main");
+const {ManageTempalteWatchDir} = require("@ztwx/auto-template");
 
 if (current_env === "dev") new ManageTempalteWatchDir().watch(path.join(host_path, "src"));
 
@@ -42,7 +42,7 @@ module.exports = {
             entry: "src/shop/main.ts",
             template: "public/index.html",
             filename: "index.html",
-            title: "Health Products",
+            title: "Voyo Furniture",
            
         },
         manage: {
@@ -53,15 +53,15 @@ module.exports = {
         },
 
     },
-    devServer: {
-        proxy: {
-            '/devTest': {
-                /* 目标代理服务器地址 */
-                target: 'http://localhost:8806',
-                /* 允许跨域 */
-                changeOrigin: true,
-                pathRewrite: {"^/devTest": ""}
-            },
-        },
-    },
+    // devServer: {
+    //     proxy: {
+    //         '/devTest': {
+    //             /* 目标代理服务器地址 */
+    //             target: 'http://localhost:8806',
+    //             /* 允许跨域 */
+    //             changeOrigin: true,
+    //             pathRewrite: {"^/devTest": ""}
+    //         },
+    //     },
+    // },
 };

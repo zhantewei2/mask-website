@@ -1,4 +1,4 @@
-import {http} from "ztwx-fire-ui/http";
+import {http} from "@ztwx/http";
 import {ticketKey, requestHost} from "@config";
 
 http.setHost(requestHost);

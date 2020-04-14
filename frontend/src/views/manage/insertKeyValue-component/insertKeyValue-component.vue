@@ -50,7 +50,7 @@
 <script lang="ts">
 import Vue from "vue";
 import {Component, Prop, Watch} from "vue-property-decorator";
-import {Form, requiredValidator} from "ztwx-fire-ui/form";
+import {Form, requiredValidator} from "@ztwx/form";
 import {KeyValue, reqInsertKeyValue, reqUpdateKeyValue} from "@/requests/core/baseKeyValue.request";
 
 @Component({})

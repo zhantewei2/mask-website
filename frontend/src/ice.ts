@@ -10,7 +10,7 @@ import {
     IceInnerRouterModule,
     IceInnerRouterPlugin,
     CacheComponentRef
-} from "./temp/modules/modules";
+} from "@condyyobeta/fire-ui";
 
 // import "ztwx-fire-ui/src/ztwComponents/styles/index.scss";
 window.Vue=Vue;

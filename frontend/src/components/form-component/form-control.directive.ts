@@ -1,6 +1,6 @@
 import {VNode} from "vue";
 import {DirectiveBinding} from "vue/types/options";
-import {Controller} from "ztwx-fire-ui/form";
+import {Controller} from "@ztwx/form";
 
 const findFormComponent = (parent: any): any => {
     // console.log(parent.$data.for)

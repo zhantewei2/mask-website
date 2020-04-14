@@ -11,7 +11,7 @@ export const ticketKey="ztwx-ticket";
 
 /**http.xhr请求host 地址.
 */
-export const requestHost="/devTest";
+export const requestHost="http://localhost:8806";
 
 //项目名
 export const projectName="管理系统";

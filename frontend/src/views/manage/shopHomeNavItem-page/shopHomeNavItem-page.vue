@@ -12,7 +12,7 @@
 <script lang="ts">
 import Vue from "vue";
 import {Component, Prop} from "vue-property-decorator";
-import {Form, requiredValidator} from "ztwx-fire-ui/form";
+import {Form, requiredValidator} from "@ztwx/form";
 import {findClassList} from "@/requests/manage/manage.requests";
 import {reqInsertShopNav} from "@/requests/manage/homeShopNav.requests";
 

@@ -1,5 +1,6 @@
 package com.ztwx.mask.config;
 
+import com.ztwx.mask.config.interceptors.CrossInterceptor;
 import com.ztwx.mask.config.interceptors.SessionInterceptor;
 import com.ztwx.mask.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,13 @@ public class Interceptor implements WebMvcConfigurer {
                 new SessionInterceptor(this.userService,this.setting)
         ).addPathPatterns(
                 Arrays.asList("/**/m/**")
+        );
+
+
+        interceptorRegistry.addInterceptor(
+                new CrossInterceptor()
+        ).addPathPatterns(
+                Arrays.asList("/**")
         );
 
     }

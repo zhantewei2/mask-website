@@ -23,7 +23,7 @@
 <script lang="ts">
     import Vue from "vue";
     import {Component, Emit, Prop, Watch} from "vue-property-decorator";
-    import {fileCompress, dataURLtoBlob} from "ztwx-fire-ui/utils";
+    import {fileCompress, dataURLtoBlob} from "@ztwx/utils";
     import {upload} from "./baidu";
     import md5 from "js-md5";
 

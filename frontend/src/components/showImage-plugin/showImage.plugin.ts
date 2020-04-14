@@ -1,4 +1,4 @@
-import {NzxAnimation} from "ztwx-fire-ui/utils";
+import {NzxAnimation} from "@ztwx/utils";
 import Vue, {PluginObject} from "vue";
 import {showImageDirective} from "./show-image.directive";
 
