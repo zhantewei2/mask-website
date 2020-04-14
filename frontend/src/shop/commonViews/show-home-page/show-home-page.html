@@ -3,7 +3,7 @@
     <article class="shop-article">
         <nav class="shop-home-nav-wrapper">
             <div class="shop-home-header2 between">
-                <img src="image/shop-logo.png"/>
+                <img :src="logoImg"/>
                 <div class="nav-menu" v-cm-ripple>
                     <i class="fa fa-menu"></i>
                 </div>
@@ -29,6 +29,27 @@
     <div class="shop-home-content">
         <slot></slot>
     </div>
-    <footer class="shop-home-footer"></footer>
+    <footer class="shop-home-footer">
+        <main class="content">
+            <div class="left item">
+                <img :src="logoImg" class="footer-logo" />
+            </div>
+            <div class="right item">
+                <div class="ice-brand shop-footer-line">Navigation</div>
+                <div @click="navMainType(i)" v-for="i in footerNavList"
+                class="shop-footer-light-line link"
+                >{{i.name}}</div>
+            </div>
+            <div class="right item">
+                <div class="ice-brand shop-footer-line">{{baseInfo.websiteName}}</div>
+                <div class="shop-footer-light-line keyValue" v-for="i in footerValueKeyList" :key="i.k">
+                    <label><i class="za" :class="'za-'+i.icon"></i></label>
+                    <span>{{baseInfo[i.k]}}</span>
+                </div>
+            </div>
+
+        </main>
+
+    </footer>
 
 </div>

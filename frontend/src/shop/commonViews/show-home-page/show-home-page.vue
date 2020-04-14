@@ -16,16 +16,33 @@
     import {shopClassify} from "../../ShopClassify";
     @Component({})
     export default class extends Vue {
-        navData: any = []
+        logoImg:string="image/shop-logo.png";
+
+        navData: any = [];
+        baseInfo:Record<string,string>={};
+
+        footerNavList:any[]=[];
         navList(j:any){
-            this.$store.dispatch("navList",j.name);
+            this.$store.dispatch("navList",j.id);
         }
         navHref(i: any) {
             if (i.href) this.$router.push(i.href);
         }
         mounted(){
             this.navData=shopClassify.navData;
+            this.baseInfo=shopClassify.baseDict;
+            this.footerNavList=shopClassify.classList.filter((i:any)=>i.main);
+            console.log(this.footerNavList)
         }
+        footerValueKeyList=[
+            {icon:"email",k:"email"},
+            {icon:"address",k:"concatAddress"}
+        ];
+
+        navMainType(i:any){
+            this.$store.dispatch("navList",i.id);
+        }
+
     }
 </script>
 <style scoped src="./show-home-page.scss" lang="scss"></style>

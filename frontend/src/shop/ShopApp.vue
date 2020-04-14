@@ -68,6 +68,8 @@
                 } else if (type == "navList") {
                     this.$router.push(`/list/${encodeURIComponent(payload)}`);
 
+                }else if(type=="href"){
+                    window.open(payload);
                 }
             });
         }

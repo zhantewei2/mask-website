@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {Component} from "vue-property-decorator";
+import {Component, Prop} from "vue-property-decorator";
 import {reqQueryShopNavItem, reqUpdateShopNavItemMulti} from "@/requests/manage/homeShopNav.requests";
 import {forkJoin, fromEvent, Observable, Observer, Subscription} from "rxjs";
 import ItemUpdateComponent from "../shopNavItemUpdate-component/shopNavItemUpdate-component.vue";
@@ -29,17 +29,18 @@ import ItemUpdateComponent from "../shopNavItemUpdate-component/shopNavItemUpdat
 })
 export default class extends Vue{
     isSort:boolean=false;
-    type:"nav"|"carousel"="nav";
+    @Prop({default:"nav"})type:'nav'|'carousel';
     selectItem:any="";
     navList:any[]=[];
     loading:boolean=false;
     constructor() {
         super();
+        (this.navList as any)=null;
     }
 
 
     mounted(){
-        console.log(this);
+
         this.getList(this.type);
     }
     beforeHandleList(list:any[]){
@@ -78,17 +79,19 @@ export default class extends Vue{
     originList:any=[];
     // sortItemActive:any="";
     sortStart(){
-
+        if(!this.navList)return;
         this.navList.forEach(i=>i.infoShow=false);
         this.originList=JSON.parse(JSON.stringify(this.navList));
         this.isSort=true;
 
     }
     sortClose() {
+        if(!this.navList)return;
         this.isSort=false;
         this.navList.forEach(i => i.infoShow = true);
     }
     sortMove(i:any,before:boolean){
+        if(!this.navList)return;
         // this.sortItemActive=i;
         const activeIndex=this.navList.findIndex(j=>j===i);
         if(before&&i<=0)return;
@@ -103,6 +106,7 @@ export default class extends Vue{
         this.navList.splice(activeIndex,1,nextItem);
     }
     sortChange():any[]|undefined{
+        if(!this.navList)return;
         const changedList:any[]=[];
         this.originList.forEach((i:any)=>{
             const nowItem=this.navList.find(j=>j.id===i.id);
@@ -133,8 +137,16 @@ export default class extends Vue{
         this.navList=JSON.parse(JSON.stringify(this.originList));
     }
     sortCancel(){
-        if(this.sortChange())this.sortRest();
-        this.sortClose();
+        if(this.sortChange()){
+            this.$confirm("顺序已经发生变更，是否取消更改，并返回。").then(()=>{
+                this.sortRest();
+                this.sortClose();
+            }).catch(()=>{
+
+            })
+        }else{
+            this.sortClose();
+        }
     }
 
     /**
@@ -144,6 +156,9 @@ export default class extends Vue{
         i.infoShow=!i.infoShow;
     }
 
+    deleteItem(i:any,index:number){
+        this.navList&&this.navList.splice(index,1);
+    }
 }
 </script>
 <style scoped src="./shopNavManage-page.scss" lang="scss"></style>

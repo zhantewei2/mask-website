@@ -2,8 +2,8 @@
     <div>
         <el-carousel v-if="!isMobile" height="470px" indicator-position="outside">
             <el-carousel-item v-for="(i,index) in carouselData" :key="index">
-                <div @click="navList(i)" class="shop-carousel-div" :style="{
-                    backgroundImage:'url('+i.src+')'
+                <div @click="nav(i)" class="shop-carousel-div" :style="{
+                    backgroundImage:'url('+i.img+')'
                 }">
                 </div>
             </el-carousel-item>
@@ -19,7 +19,7 @@
         <shop-item
                 primary="true"
                 :itemRef="i" v-for="(i,index) in mainList" :key="index"
-                @navClick="clickMainItem(i)"
+                @navClick="nav(i)"
         >
 
         </shop-item>

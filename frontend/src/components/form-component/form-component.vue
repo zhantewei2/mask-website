@@ -6,7 +6,9 @@
 -->
 
 <template>
-    <div class="ice-form-tag">
+    <div class="ice-form-tag yo-form"
+     :class="[size?'yo-form-size-'+size:'']"
+    >
         <slot></slot>
     </div>
 </template>
@@ -20,6 +22,7 @@
         name: "ice-form"
     })
     export default class extends Vue {
+        @Prop()size:"mini"|undefined;
         formName: string = "ice-form";
         @Prop({}) form: Form;
 

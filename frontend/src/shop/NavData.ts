@@ -41,13 +41,3 @@ export const typeData = [
     {id: "AS/NZS", types: ["P1", "P2"], navLabel: ["AS/NZS"]},
     {id: "NIOSH", types: ["N95", "N99", "FDA"], navLabel: ["NIOSH"]}
 ];
-export const classifyIdDict: any = {
-    "FFP1 NR": 17,
-    "FFP2 NR": 18,
-    "FFP3 NR": 19,
-    "N95": 20,
-    "N99": 21,
-    "FDA": 22,
-    "P1": 23,
-    "P2": 24
-};

@@ -12,64 +12,67 @@
 <script lang="ts">
     import Vue from "vue";
     import {Component, Watch} from "vue-property-decorator";
-    import {typeData, classifyIdDict} from "../../NavData";
     import {PaginationParams} from "@types";
     import {reqQueryShop} from "@/requests/manage/manage.requests";
-    import {finalize} from "rxjs/operators";
+    import {shopClassify} from "../../ShopClassify";
 
     @Component({})
     export default class extends Vue {
-        navLabel: string[] = [];
         types: string[] = [];
-        routeIdName: string = "";
+        dataItem:any={};
 
         @Watch("$route.path", {immediate: true})
         watchRouteId(path: string) {
             let routeId = (this.$route.params || {}).id;
-            if (!routeId) return;
-            this.routeIdName = routeId = decodeURIComponent(routeId);
+            if (!routeId) return this.emptyData();
+            routeId = decodeURIComponent(routeId);
+            const dataItem=shopClassify.classList.find(i=>i.id==routeId);
 
-            const dataItem: any = typeData.find((i: any) => i.id == routeId);
-            if (!dataItem) {
-                console.debug("not found dataId");
-                return;
+            if (!dataItem ||!dataItem.types||!dataItem.types.length) {
+                return this.emptyData();
             }
-            this.navLabel = dataItem.navLabel;
+            this.dataItem=dataItem;
             this.types = dataItem.types;
             this.currentPage = 1;
-            this.loading = true;
             this.pageChange({
                 currentPage: this.currentPage,
                 pageSize: this.pageSize
             }, () => {
-                this.loading = false;
             })
         }
-
+        emptyData(){
+            this.shopList=[];
+        }
         mounted() {
 
         }
 
         shopList: any = [];
-        total: number;
+        total: number=0;
         currentPage: number = 1;
         pageSize: number = 15;
         loading: boolean = false;
 
         pageChange(p: PaginationParams, cb?: any) {
+            this.loading=true;
             reqQueryShop({
                 currentPage: p.currentPage,
                 pageSize: p.pageSize,
                 ...(this.types && this.types.length ? {
                     query: {
-                        vestIns: this.types.map((type: string) => classifyIdDict[type])
+                        vestIns: this.types
                     }
                 } : {})
             }).subscribe((result: any) => {
                 this.shopList = result.list;
+                this.currentPage=result.currentPage;
+                this.total=result.total;
                 cb && cb();
+                this.loading=false;
             }, err => {
                 cb && cb();
+                this.emptyData();
+                this.loading=false;
             })
         }
 

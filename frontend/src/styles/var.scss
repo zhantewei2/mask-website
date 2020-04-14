@@ -1,6 +1,6 @@
 $--color-main: #ED7861;
 $--color-secretary: $--color-main;
-$--color-assist: #118AB2;
+$--color-assist: #409EFF;
 $--color-header: $--color-main;
 $--color-shadow: black;
 $--color-bg: white;
@@ -106,6 +106,11 @@ $--yo-label-p-right: .8rem;
 $--yo-row-distance: 1em;
 $--yo-row-aside-p: 2em 2em 1em 2em;
 
+$--yo-row-size:(
+  small:(
+        label-minW:80px
+  )
+);
 /**
 card
  */
@@ -130,3 +135,5 @@ $--yo-upload-l: 10rem;
 $--yo-upload-color: $--color-main;
 $--yo-upload-icon-size: 3rem;
 $--yo-upload-icon-color: $--color-font-beauty-des;
+
+$--yo-form-mini-p:1rem;
