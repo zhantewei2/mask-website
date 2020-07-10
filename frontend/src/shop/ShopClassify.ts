@@ -25,7 +25,7 @@ export interface NavDataItem{
 
 export class ShopClassify{
     beforeNavData:NavDataItem[]=[{name:"Home",href:"/",main:0,id:0,types:[]}];
-    afterNavData:NavDataItem[]=[{name: "Contact Us", href: "/concatUs",main:0,id:1,types:[]}];
+    afterNavData:NavDataItem[]=[];
 
     loaded:boolean=false;
     classList:any[]=[];

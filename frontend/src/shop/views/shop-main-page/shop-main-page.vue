@@ -19,7 +19,7 @@
         carouselData: any = [];
         isMobile: boolean = false;
         mediaOrder: any;
-
+        baseInfo:any;
         mounted() {
             this.mediaOrder = mediaObserver.subscribe((i: MediaRef) => {
                 this.isMobile = i.mobile;
@@ -27,6 +27,9 @@
 
             this.carouselData=shopClassify.homeCarouselList;
             this.mainList=shopClassify.homeNavList;
+            this.baseInfo=shopClassify.baseDict;
+            this.itdName=this.baseInfo.websiteName;
+            this.itdContent=this.baseInfo.webDes;
         }
 
         beforeDestroy() {
@@ -45,9 +48,8 @@
         }
 
         mainList:any = [];
-        itdName = "DASHENG MASKS SERIES";
-        itdContent = "The company passed the ISO9001 international quality management system certification. Dasheng masks dozens of models for the European standard EN149 and get FFP1, FFP2 and FFP3 quality level certification respectively; dozens of models for AS / NZS 1716 Standards  Australia and the United States NEISON, NIOSH N95, N99 standard international certification.Double victory license mesh valve masks and face cloth masks and other national PatentOffice.";
-
+        itdName:string = "";
+        itdContent:string;
     }
 </script>
 <style scoped src="./shop-main-page.scss" lang="scss"></style>

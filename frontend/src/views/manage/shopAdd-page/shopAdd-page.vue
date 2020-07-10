@@ -32,7 +32,8 @@
             {id: "ctn", validator: []},
             {id: "dimension", validator: []},
             {id: "GW", validator: []},
-            {id: "NW", validator: []}
+            {id: "NW", validator: []},
+            {id:"info",validator:[]}
         ]);
 
         submit() {
@@ -87,6 +88,7 @@
         }
 
         mounted() {
+          console.log(this.formValue);
             this.getVestInList();
             if (this.formValue) {
                 const formKeys: string[] = Object.keys(this.form.controllerDict);

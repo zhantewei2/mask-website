@@ -39,9 +39,12 @@
         handleInfo(result: any) {
             this.shopName = result.name;
             result.vestName = this.vestName = result.vestRef.name;
-
             this.tableData = [this.shop];
             result.GWNW = (result.GW || "") + "/" + (result.NW || "");
+            this.handleInfoContent(result);
+        }
+        handleInfoContent(result:any){
+          result.info=result.info.replace(/\n/g,"</br>");
         }
 
         getShopInfo(shopId: string) {

@@ -3,7 +3,10 @@
     <article class="shop-article">
         <nav class="shop-home-nav-wrapper">
             <div class="shop-home-header2 between">
-                <img :src="logoImg"/>
+                <div class="flex">
+                    <img class="logo" :src="logoImg"/>
+                    <div class="ice-brand center">{{baseInfo.websiteName}}</div>
+                </div>
                 <div class="nav-menu" v-cm-ripple>
                     <i class="fa fa-menu"></i>
                 </div>
@@ -49,7 +52,9 @@
             </div>
 
         </main>
-
+        <div style="" class="ice-des text-center">
+            公安备案号 <span style="margin-left:1rem">{{baseInfo.ICP}}</span>
+        </div>
     </footer>
 
 </div>

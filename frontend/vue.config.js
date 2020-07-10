@@ -3,7 +3,7 @@ const join = (...args) =>
     path.resolve(__dirname, ...args);
 
 const host_path = process.cwd();
-
+const {GzipWebpackPlugin} =require("@voyo/gzip-webpack-plugin");
 const current_env = process.env.NODE_ENV;
 
 
@@ -34,15 +34,19 @@ module.exports = {
 
         config.plugins.delete("prefetch");
         config.plugins.delete("preload");
+        if(current_env==="production"){
+            // config.plugin("gzip").use(
+            //   new GzipWebpackPlugin({extList:['js','css','html'],outputPath:join("dist")})
+            // )
+        }
         // config.plugins.delete("extract-css");
-
     },
     pages: {
         index: {
             entry: "src/shop/main.ts",
             template: "public/index.html",
             filename: "index.html",
-            title: "Health Products",
+            title: "玖鼎",
            
         },
         manage: {
@@ -53,15 +57,15 @@ module.exports = {
         },
 
     },
-    devServer: {
-        proxy: {
-            '/devTest': {
-                /* 目标代理服务器地址 */
-                target: 'http://localhost:8806',
-                /* 允许跨域 */
-                changeOrigin: true,
-                pathRewrite: {"^/devTest": ""}
-            },
-        },
-    },
+    // devServer: {
+    //     proxy: {
+    //         '/devTest': {
+    //             /* 目标代理服务器地址 */
+    //             target: 'http://localhost:8806',
+    //             /* 允许跨域 */
+    //             changeOrigin: true,
+    //             pathRewrite: {"^/devTest": ""}
+    //         },
+    //     },
+    // },
 };

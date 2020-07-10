@@ -29,7 +29,7 @@ public class InsertShopParams {
     private String dimension;
     private Integer GW;
     private Integer NW;
-
+    private String info;
     public void setPrice(Object v){
         int i=((Integer)v).intValue();
         this.price=(float)i;

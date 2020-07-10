@@ -19,5 +19,6 @@ create table if not exists shopInfo(
     ctn varchar(100),
     dimension varchar(100),
     GW mediumint comment '毛重',
-    NW mediumint comment '净值'
+    NW mediumint comment '净值',
+    info text comment '介绍'
 )

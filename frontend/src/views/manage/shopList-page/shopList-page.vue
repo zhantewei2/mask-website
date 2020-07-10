@@ -13,7 +13,7 @@
     import Vue from "vue";
     import {Component} from "vue-property-decorator";
     import {PaginationParams} from "@types";
-    import {reqQueryShop, reqRemoveShop} from "@/requests/manage/manage.requests";
+    import {reqQueryShop, reqRemoveShop, reqShopInfo} from "@/requests/manage/manage.requests";
     import ShopAddPage from "../shopAdd-page/shopAdd-page.vue";
 
     @Component({
@@ -62,9 +62,10 @@
         }
 
         updateShop(i: any) {
-
-            this.updateItem = i;
-            this.visibleUpdate = true;
+            reqShopInfo(i.id).subscribe((info)=>{
+              this.updateItem = info;
+              this.visibleUpdate = true;
+            });
         }
 
         shopUpdated(newValue: any) {

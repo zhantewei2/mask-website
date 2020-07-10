@@ -75,7 +75,8 @@
             ctn=#{ctn},
             dimension=#{dimension},
             GW=#{GW},
-            NW=#{NW}
+            NW=#{NW},
+            info=#{info}
         </set>
     </insert>
     <delete id="deleteShop" >
@@ -107,6 +108,7 @@
             <if test="dimension!=null">dimension=#{dimension},</if>
             <if test="GW!=null">GW=#{GW},</if>
             <if test="NW!=null">NW=#{NW}</if>
+            <if test="info!=null">info=${info}</if>
         </set>
         where id=#{id}
 

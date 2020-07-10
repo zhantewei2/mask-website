@@ -30,4 +30,6 @@ public class Shop {
     private Integer GW;
     private Integer NW;
     private ShopClass vestRef;
+
+    private String info;
 }

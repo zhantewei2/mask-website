@@ -87,6 +87,14 @@
                 </Value>
             </Cell>
         </Row>
+        <Row>
+            <Cell>
+                <Label>info</Label>
+                <Value>
+                    <el-input type="textarea" v-model="form.value.info"/>
+                </Value>
+            </Cell>
+        </Row>
     </Form>
     <Aside class="text-center">
         <el-button type="primary" :disabled="!form.isPass" @click="submit">提交</el-button>

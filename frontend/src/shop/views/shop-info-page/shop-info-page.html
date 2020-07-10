@@ -3,7 +3,7 @@
     <div class="shop-card" style="min-height: 300px">
 
         <div class="itd-title" v-if="shop.name">
-            <span>{{shopName}} Mask</span>
+            <span>{{shopName}} Furniture</span>
         </div>
 
         <svg-loader :show="loading" top="80px"/>
@@ -16,8 +16,7 @@
 
             </main>
             <article>
-                <div>
-                    article
+                <div class="ice-content" v-html="shop.info">
                 </div>
             </article>
         </div>
@@ -32,12 +31,12 @@
                     :data="tableData"
                     border
             >
-                <el-table-column prop="name" label="Cone Mask"/>
+                <el-table-column prop="name" label="Cone Furniture"/>
                 <el-table-column prop="vestName" label="type"/>
                 <el-table-column prop="box" label="box"/>
                 <el-table-column prop="ctn" label="ctn"/>
                 <el-table-column prop="dimension" label="dimension"/>
-                <el-table-column prop="GWNW" label="GW/NW"/>
+                <el-table-column prop="price" label="price"/>
             </el-table>
         </div>
     </div>
