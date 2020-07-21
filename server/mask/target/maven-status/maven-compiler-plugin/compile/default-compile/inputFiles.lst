@@ -35,6 +35,7 @@
 /frontend/guaze/server/mask/src/main/java/com/ztwx/mask/config/Setting.java
 /frontend/guaze/server/mask/src/main/java/com/ztwx/mask/service/ShopHomeService.java
 /frontend/guaze/server/mask/src/main/java/com/ztwx/mask/config/Interceptor.java
+/frontend/guaze/server/mask/src/main/java/com/ztwx/mask/Test.java
 /frontend/guaze/server/mask/src/main/java/com/ztwx/mask/config/ExceptionHandler.java
 /frontend/guaze/server/mask/src/main/java/com/ztwx/mask/controller/params/QueryShopClass.java
 /frontend/guaze/server/mask/src/main/java/com/ztwx/mask/service/Mail.java

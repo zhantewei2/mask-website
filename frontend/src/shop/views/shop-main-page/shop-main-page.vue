@@ -20,6 +20,7 @@
         isMobile: boolean = false;
         mediaOrder: any;
         baseInfo:any;
+        itdContent:string="";
         mounted() {
             this.mediaOrder = mediaObserver.subscribe((i: MediaRef) => {
                 this.isMobile = i.mobile;
@@ -49,7 +50,6 @@
 
         mainList:any = [];
         itdName:string = "";
-        itdContent:string;
     }
 </script>
 <style scoped src="./shop-main-page.scss" lang="scss"></style>

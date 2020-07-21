@@ -11,7 +11,7 @@ export const ticketKey="ztwx-ticket";
 
 /**http.xhr请求host 地址.
 */
-export const requestHost="http://180.76.248.31:8806";
+export const requestHost="https://www.gohuike.com/gauze";
 
 //项目名
 export const projectName="管理系统";
