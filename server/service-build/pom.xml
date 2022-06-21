@@ -21,7 +21,7 @@
         <cm.link.version>1.0</cm.link.version>
         <spring.feign.version>1.4.6.RELEASE</spring.feign.version>
         <cm.kafka.version>2.2.6.RELEASE</cm.kafka.version>
-        <mysql.connector.version>8.0.14</mysql.connector.version>
+        <mysql.connector.version>8.0.28</mysql.connector.version>
         <nacos.context.version>0.3.3</nacos.context.version>
         <nacos.client.version>1.1.0</nacos.client.version>
         <nacos.config.version>0.2.3</nacos.config.version>
